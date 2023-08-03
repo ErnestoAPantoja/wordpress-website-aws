@@ -119,3 +119,41 @@ _<b>NOTE:</b> This project is done exclusively in the N. Virginia region (us-eas
 <p align="center">
 <img src="https://i.imgur.com/wuOursD.png" height="80%" width="80%" alt="Step 1-12"/>
 </p>
+
+- The next thing that needs to be done is to associate the public subnets with the public route table.
+  - While under the menu for Public Route Table, open the Subnet associations tab and scroll to Explicit subnet associations. Click on Edit subnet associations. Select both public subnets and save the associations.
+
+ <p align="center">
+<img src="https://i.imgur.com/0csGYLF.png" height="80%" width="80%" alt="Step 1-13"/>
+</p>
+
+ <p align="center">
+<img src="https://i.imgur.com/0zVDZug.png" height="80%" width="80%" alt="Step 1-14"/>
+</p>
+
+- In order to finish creating the VPC, the four private subnets need to be created.
+  - On the left-hand menu, click on Subnets and create the private subnets for the VPC. When creating your private subnets, make sure the Dev VPC is selected. For the first private subnet, name it Private App Subnet AZ1 and make sure it is in the us-east-1a availability zone. Its IPv4 CIDR block should be 10.0.2.0/24. For the second private subnet, name it Private App Subnet AZ2 and make sure it is in the us-east-1b availability zone. Its IPv4 CIDR block should be 10.0.3.0/24. For the third private subnet, name it Private Data Subnet AZ1 and make sure it is in the us-east-1a availability zone. Its IPv4 CIDR block should be 10.0.4.0/24. For the fourth private subnet, name it Private Data Subnet AZ2 and make sure it is in the us-east-1b availability zone. Its IPv4 CIDR block should be 10.0.5.0/24.
+
+<p align="center">
+<img src="https://i.imgur.com/t5sHdIT.png" height="80%" width="80%" alt="Step 1-15"/>
+</p>
+
+<p align="center">
+<img src="https://i.imgur.com/Frc068s.png" height="80%" width="80%" alt="Step 1-16"/>
+</p>
+
+<p align="center">
+<img src="https://i.imgur.com/6UgkdLh.png" height="80%" width="80%" alt="Step 1-17"/>
+</p>
+
+<p align="center">
+<img src="https://i.imgur.com/3wbbJrt.png" height="80%" width="80%" alt="Step 1-18"/>
+</p>
+
+- Before you continue, make sure all 6 subnets are in the correct Availability Zones. The project will rely heavily on all the subnets and all resources and data will flow across the VPC.
+
+_<b>NOTE:</b> When you create a route to a route table, all the subnets associated within the route table will automatically become public. Subnets belonging in a route table that does not have a route are private by default. In the Route Tables tab, check each route table to confirm each subnet is where they belong as shown below._
+
+<p align="center">
+<img src="https://i.imgur.com/8wTlXJy.png" height="80%" width="80%" alt="Step 1-19"/>
+</p>
