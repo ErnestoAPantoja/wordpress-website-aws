@@ -1,4 +1,4 @@
-<h1>Deploying a Wordpress website on AWS</h1>
+<h1>Deploying a WordPress website on AWS</h1>
 
 I have created a dynamic website using AWS services. The purpose behind this project is to build on what I have learned from the AWS Certified Cloud Practitioner certification and flesh out concepts I will be familiar with for future AWS projects and certification exams. I used a variety of different AWS services to build the website, and I took the website down after building it to save money. I spent about $30 to do this project over the span of a few days. I am using my Windows 10 computer in order to do this project and am using PuTTY to get familiar with using the program. 
 
@@ -22,7 +22,7 @@ _<b>NOTE:</b> This project is done exclusively in the N. Virginia region (us-eas
 <h2>High-Level Deployment and Configuration Steps</h2>
 
 - Setup a VPC.
-- Setup NAT Gateways.
+- Setup NAT gateways.
 - Create security groups.
 - Launch an RDS instance.
 - Enable EFS.
@@ -157,3 +157,34 @@ _<b>NOTE:</b> When you create a route to a route table, all the subnets associat
 <p align="center">
 <img src="https://i.imgur.com/8wTlXJy.png" height="80%" width="80%" alt="Step 1-19"/>
 </p>
+
+<h3>&#9313; Create NAT gateways</h3>
+
+- Two NAT gateways will be created within the first and second Availability Zones. One will be in Public Subnet AZ1 and will be tied to a new private route table via a route that will connect the two together. The route table will also be associated with the Private App Subnet AZ1 and Private Data Subnet AZ1 subnets within the VPC. The second NAT gateway wil be created in Public Subnet AZ1 and tied to a new private route table with a route. The second route table will be associated with the Private App Subnet AZ2 and Private Data Subnet AZ2 subnets within the VPC.
+- On the AWS management console, navigate to the VPC service. Select NAT Gateways on the VPC Dashboard. Create the first NAT gateway in Public Subnet AZ1. Name it NAT Gateway AZ1. Make sure to click Allocate Elastic IP before creating the NAT gateway.
+
+<p align="center">
+<img src="https://i.imgur.com/xy6mj0E.png" height="80%" width="80%" alt="Step 2-1"/>
+</p>
+
+- Now that the NAT gateway is created, a private route table and the appropriate route will be created so there will be access to the internet. Call this new route table Private Route Table AZ1 and put it in the Dev VPC. For the route, make sure the Destination is 0.0.0.0/0 and the Target is NAT Gateway AZ1.
+
+<p align="center">
+<img src="https://i.imgur.com/ZB8sq4W.png" height="80%" width="80%" alt="Step 2-2"/>
+</p>
+
+<p align="center">
+<img src="https://i.imgur.com/GsrBCwU.png" height="80%" width="80%" alt="Step 2-3"/>
+</p>
+
+- The next step is to associate the route table with Private App Subnet AZ1 and Private Data Subnet AZ1. In Private Route Table AZ1, open the Subnet associations tab and click on Edit subnet associations. Select Private App Subnet AZ1 and Private Data Subnet AZ1 and save the associations.
+
+<p align="center">
+<img src="https://i.imgur.com/VNPTmid.png" height="80%" width="80%" alt="Step 2-4"/>
+</p>
+
+- Repeat the previous steps in order to create a NAT gateway in Public Subnet AZ2.
+  - Name the second NAT gateway NAT Gateway AZ2.
+  - Name the second route table Private Route Table AZ2 and put it in the Dev VPC.
+  - Add a route where the Destination is 0.0.0.0/0 and the Target is NAT Gateway AZ2.
+  - Associate the route table with Private App Subnet AZ2 and Private Data Subnet AZ2.
