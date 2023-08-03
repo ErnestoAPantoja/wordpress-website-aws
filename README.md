@@ -55,3 +55,67 @@ _<b>NOTE:</b> This project is done exclusively in the N. Virginia region (us-eas
 <p align="center">
 <img src="https://i.imgur.com/4bpt43d.png" height="80%" width="80%" alt="Step 1-1"/>
 </p>
+
+- Next, DNS host names have to be enabled for the VPC that was created. Under Actions, select Edit VPC settings. Under DNS settings, make sure Enable DNS resolution and Enable DNS hostnames are checked and save the changes.
+
+<p align="center">
+<img src="https://i.imgur.com/RXp9haj.png" height="80%" width="80%" alt="Step 1-2"/>
+</p>
+
+<p align="center">
+<img src="https://i.imgur.com/nnqQFcZ.png" height="80%" width="80%" alt="Step 1-3"/>
+</p>
+
+- An internet gateway will now be created for the VPC. On the left-hand menu, select Internet Gateways. Click Create internet gateway.
+  - Give a name for the internet gateway (in my case, it is Dev Internet Gateway) and create it.
+
+<p align="center">
+<img src="https://i.imgur.com/P984xtj.png" height="80%" width="80%" alt="Step 1-4"/>
+</p>
+
+- After creating the internet gateway, it will have to be attached to the VPC. This is to ensure the VPC can communicate with the internet. There will be an option that says to Attach to a VPC after the internet gateway has been created.
+  - One thing to note is that you can only attach one internet gateway to one VPC. When you go to attach an internet gateway to a VPC on AWS, you can only select VPCs that do not have internet gateways.
+
+<p align="center">
+<img src="https://i.imgur.com/VaRicio.png" height="80%" width="80%" alt="Step 1-5"/>
+</p>
+
+- Now that the internet gateway is attached to the VPC, public subnets will be created in two availability zones (us-east-1a and us-east-1b).
+  - Select the Subnets tab on the left-hand menu. Click Create subnet. When creating your public subnets, make sure the Dev VPC is selected. For the first public subnet, name it Public Subnet AZ1 and make sure it is in the us-east-1a availability zone. Its IPv4 CIDR block should be 10.0.0.0/24. For the second public subnet, name it Public Subnet AZ2 and make sure it is in the us-east-1b availability zone. Its IPv4 CIDR block should be 10.0.1.0/24.
+
+<p align="center">
+<img src="https://i.imgur.com/1QhrXhb.png" height="80%" width="80%" alt="Step 1-6"/>
+</p>
+
+<p align="center">
+<img src="https://i.imgur.com/toddnWF.png" height="80%" width="80%" alt="Step 1-7"/>
+</p>
+
+- After the public subnets are created, the auto enable IP settings need to be enabled for both subnets. This means when an EC2 instance is launched in the subnets, the instances will be assigned an appropriate public IP address in order to communicate with the internet.
+  - For each subnet, select them and click on Edit subnet settings. Make sure Enable auto-assign public IPv4 address is turned on for both subnets and save the changes.
+
+<p align="center">
+<img src="https://i.imgur.com/YJbkxaN.png" height="80%" width="80%" alt="Step 1-8"/>
+</p>
+
+<p align="center">
+<img src="https://i.imgur.com/TxhpCUJ.png" height="80%" width="80%" alt="Step 1-9"/>
+</p>
+
+- A public route table will now be created.
+  - Select the Route Tables tab on the left-hand menu. A route table was already created when the VPC was made. This is referred to as the main route table and is private by default. Click Create route table and name the new route table Public Route Table. It will be attached to the Dev VPC.
+ 
+<p align="center">
+<img src="https://i.imgur.com/s1gIgpk.png" height="80%" width="80%" alt="Step 1-10"/>
+</p>
+
+- A public route will be added to the route table that was made. This public route will route traffic to the internet.
+  - Under the Routes tab for the Public Route Table, click Edit Routes. Add a new route where the Destination is 0.0.0.0/0 (this means all traffic) and the Target is the Dev Internet Gateway. Save the changes.
+
+<p align="center">
+<img src="https://i.imgur.com/5Nt9aoP.png" height="80%" width="80%" alt="Step 1-11"/>
+</p>
+
+<p align="center">
+<img src="https://i.imgur.com/wuOursD.png" height="80%" width="80%" alt="Step 1-12"/>
+</p>
