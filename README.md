@@ -152,7 +152,7 @@ _<b>NOTE:</b> This project is done exclusively in the N. Virginia region (us-eas
 
 - Before you continue, make sure all 6 subnets are in the correct Availability Zones. The project will rely heavily on all the subnets and all resources and data will flow across the VPC.
 
-_<b>NOTE:</b> When you create a route to a route table, all the subnets associated within the route table will automatically become public. Subnets belonging in a route table that does not have a route are private by default. In the Route Tables tab, check each route table to confirm each subnet is where they belong as shown below._
+_<b>NOTE:</b> When you create a route to a route table, all the subnets associated within the route table will automatically become public. Subnets belonging in a route table that does not have a route are private by default. In the Route Tables tab, check each route table to confirm each subnet are where they belong as shown below._
 
 <p align="center">
 <img src="https://i.imgur.com/8wTlXJy.png" height="80%" width="80%" alt="Step 1-19"/>
