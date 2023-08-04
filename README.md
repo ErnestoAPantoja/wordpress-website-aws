@@ -223,3 +223,11 @@ _<b>NOTE:</b> When you create a route to a route table, all the subnets associat
 </p>
 
 <h3>&#9315; Create the RDS Instance</h3>
+
+<p align="center">
+<img src="https://i.imgur.com/mx6xtMG.jpg" height="80%" width="80%" alt="Step 4"/>
+</p>
+
+- The next step is to create a RDS database in the Private Data Subnets. On the AWS management console, navigate to the RDS service to get started. Before creating the RDS instance, subnet groups need to be created. They specify which subnets the RDS database will be created in. Select Subnet groups on the RDS Dashboard and click Create DB subnet group.
+  - Name the group database subnets and place it in the Dev VPC. Under the Add subnets section, select the us-east-1a and us-east-1b Availability Zones. For Subnets, select the subnets with the CIDR blocks 10.0.4.0/24 and 10.0.5.0/24. Click Create to make the subnet group.
+- Now that the subnet group is created, it is time to make the database itself.
