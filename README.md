@@ -160,6 +160,10 @@ _<b>NOTE:</b> When you create a route to a route table, all the subnets associat
 
 <h3>&#9313; Create NAT gateways</h3>
 
+<p align="center">
+<img src="https://i.imgur.com/kFiYDfb.jpg" height="80%" width="80%" alt="Step 2"/>
+</p>
+
 - Two NAT gateways will be created within the first and second Availability Zones. One will be in Public Subnet AZ1 and will be tied to a new private route table via a route that will connect the two together. The route table will also be associated with the Private App Subnet AZ1 and Private Data Subnet AZ1 subnets within the VPC. The second NAT gateway wil be created in Public Subnet AZ1 and tied to a new private route table with a route. The second route table will be associated with the Private App Subnet AZ2 and Private Data Subnet AZ2 subnets within the VPC.
 - On the AWS management console, navigate to the VPC service. Select NAT Gateways on the VPC Dashboard. Create the first NAT gateway in Public Subnet AZ1. Name it NAT Gateway AZ1. Make sure to click Allocate Elastic IP before creating the NAT gateway.
 
@@ -188,3 +192,34 @@ _<b>NOTE:</b> When you create a route to a route table, all the subnets associat
   - Name the second route table Private Route Table AZ2 and put it in the Dev VPC.
   - Add a route where the Destination is 0.0.0.0/0 and the Target is NAT Gateway AZ2.
   - Associate the route table with Private App Subnet AZ2 and Private Data Subnet AZ2.
+
+<h3>&#9314; Create Security Groups</h3>
+
+<p align="center">
+<img src="https://i.imgur.com/yw8HU3r.jpg" height="80%" width="80%" alt="Step 3"/>
+</p>
+
+- The above image details all the security groups that need to be created to continue with the project. The Application Load Balancer will have a security group to allow internet traffic (HTTP and HTTPS). One security group will be dedicated to allow SSH access to EC2 instances using your IP address. (Any time an SSH security group is created, it is always best practice to limit the source to your IP address for safety.) A security group will be created for web servers in the Private App Subnets. The sources for this security group will be limited to the ALB and SSH security groups respectively. A security group will be created for the RDS database that will be hosted on the Private Data Subnets and the source will be from the Webserver security group. An EFS security group will be made for elastic file system and use previous security groups for the sources.
+- On the AWS management console, navigate to the VPC service. On the VPC Dashboard, open the Security Groups tab. The first security group that will be created is the ALB Security Group. Click on Create security group to get started. Make sure the security group is in the Dev VPC. For Inbound rules, there will be two rules that will be added. For the Type, select HTTP and HTTPS. The Sources will come from Anywhere. To have this setting, input the CIDR block 0.0.0.0/0. Click Create security group to confirm the settings.
+
+<p align="center">
+<img src="https://i.imgur.com/RHjr9gP.png" height="80%" width="80%" alt="Step 3-1"/>
+</p>
+
+<p align="center">
+<img src="https://i.imgur.com/Bafkoaa.png" height="80%" width="80%" alt="Step 3-2"/>
+</p>
+
+- Create the rest of the security groups with the following settings:
+  - SSH Security Group - VPC: Dev VPC, Inbound rules: SSH, Source: My IP
+  - Webserver Security Group - VPC: Dev VPC, Inbound rules: HTTP, Source: ALB Security Group, Inbound rules: HTTPS, Source: ALB Security Group, Inbound rules: SSH, Source: SSH Security Group.
+  - Database Security Group - VPC: Dev VPC, Inbound rules: MySQL/Aurora, Source: Webserver Security Group.
+  - EFS Security Group - VPC: Dev VPC, Inbound rules: NFS, Source: Webserver Security Group, Inbound rules: SSH, Source: SSH Security Group.
+- After the EFS Security Group is created, click on Edit inbound rules to add one more important rule:
+  - Add an additional NFS rule where the source is from the EFS Security Group. This rule could not be added unless the security group was already created.
+
+<p align="center">
+<img src="https://i.imgur.com/LF15HvK.png" height="80%" width="80%" alt="Step 3-3"/>
+</p>
+
+<h3>&#9315; Create the RDS Instance</h3>
