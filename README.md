@@ -230,4 +230,34 @@ _<b>NOTE:</b> When you create a route to a route table, all the subnets associat
 
 - The next step is to create a RDS database in the Private Data Subnets. On the AWS management console, navigate to the RDS service to get started. Before creating the RDS instance, subnet groups need to be created. They specify which subnets the RDS database will be created in. Select Subnet groups on the RDS Dashboard and click Create DB subnet group.
   - Name the group database subnets and place it in the Dev VPC. Under the Add subnets section, select the us-east-1a and us-east-1b Availability Zones. For Subnets, select the subnets with the CIDR blocks 10.0.4.0/24 and 10.0.5.0/24. Click Create to make the subnet group.
-- Now that the subnet group is created, it is time to make the database itself.
+
+<p align="center">
+<img src="https://i.imgur.com/3N0vEt9.png" height="80%" width="80%" alt="Step 4-1"/>
+</p>
+
+- Now that the subnet group is created, it is time to make the database itself. Click on Databases on the left-hand menu and click on Create database. Use the following parameters to create the database:
+  - Creation method: Standard create
+  - Engine options: MySQL
+  - Engine Version: MySQL 5.7 (The latest version of 5.7 as in the future, more updated versions will be released beyond when I created the website.)
+  - Templates: Dev/Test
+  - DB instance identifier: dev-rds-db
+  - Master username: (Whatever you choose, in my case it is ernesto.)
+  - Master password: (Whatever you choose, in my case it is Password1. Make sure you remember this password as there will be no way to retrieve it afterward.)
+  - DB instance class: Burstable classes (db.t2.micro)
+  - VPC: Dev VPC
+  - Subnet group: database subnets
+  - VPC security group: Choose existing (Database Security Group)
+  - Availability Zone: us-east-1b
+  - Database authentication: Password authentication
+  - Initial database name: applicationdb (Make sure you expand Additional configuration to see this parameter, you must specify a name or else RDS will not make the database.)
+- After the database is created (it will take a few minutes for AWS to create), click on the database indentifier name. Under the Connectivity & security tab, take note of the Endpoint of the database. This information will be used later when connecting to the database using an EC2 instance. Under the Configuration tab, take note of the DB instance ID and DB name as they will also be used to connect to the database.
+
+<p align="center">
+<img src="https://i.imgur.com/PGn58sg.png" height="80%" width="80%" alt="Step 4-2"/>
+</p>
+
+<p align="center">
+<img src="https://i.imgur.com/IIeUG0w.png" height="80%" width="80%" alt="Step 4-3"/>
+</p>
+
+<h3>&#9316; Create the Elastic File System (EFS)</h3>
