@@ -290,3 +290,16 @@ _<b>NOTE:</b> When you create a route to a route table, all the subnets associat
 </p>
 
 <h3>&#9317; Create a Key Pair</h3>
+
+- A key pair will now have to be created in order to progress further with the project. On the AWS management console, navigate to the EC2 service. On the left-hand menu, click on Key Pairs and click Create key pair.
+  - Name the key pair (in my case, myec2key) and make sure the Key pair type is RSA. The file format will be kept as .ppk because I will be using the key pair for use with PuTTY.
+
+<p align="center">
+<img src="https://i.imgur.com/NHsrLTe.png" height="80%" width="80%" alt="Step 6-1"/>
+</p>
+
+<p align="center">
+<img src="https://i.imgur.com/iXgObty.png" height="80%" width="80%" alt="Step 6-2"/>
+</p>
+
+- When a key pair is made, two keys are generated: a public key and a private key. The key on the AWS console is the public key and it will be used in the EC2 instance when it is launched. The key that is downloaded on the computer is the private key and it will be used whenever SSH is used to access an instance.
