@@ -261,3 +261,32 @@ _<b>NOTE:</b> When you create a route to a route table, all the subnets associat
 </p>
 
 <h3>&#9316; Create the Elastic File System (EFS)</h3>
+
+- Now that the RDS database is in place, it is time to create an EFS file system with mount targets in the Private Data Subnets in both Availability Zones. This is to ensure the web servers can have access to shared files.
+- On the AWS management console, navigate to the EFS service and click Create file system and Customize. Use the following parameters to create the file system:
+  - Name: Dev-EFS
+  - Encryption: Check off Enable encryption of data at rest (This is to ensure we do not get charged for the encryption.)
+  - Tag key: Name, Tag value: Dev-EFS
+  - VPC: Dev VPC
+  - Mount targets: us-east-1a, Private Data Subnet AZ1, EFS Security Group and us-east-1b, Private Data Subnet AZ2, EFS Security Group
+  - File system policy: Leave everything as default
+
+<p align="center">
+<img src="https://i.imgur.com/8gXgWA4.png" height="80%" width="80%" alt="Step 5-1"/>
+</p>
+
+<p align="center">
+<img src="https://i.imgur.com/T6798l6.png" height="80%" width="80%" alt="Step 5-2"/>
+</p>
+
+- Now that the elastic file system is created, click on the File system ID and click on Attach. This information will be used later in the project to mount the file system.
+
+<p align="center">
+<img src="https://i.imgur.com/9XEGzAk.png" height="80%" width="80%" alt="Step 5-3"/>
+</p>
+
+<p align="center">
+<img src="https://i.imgur.com/2ISmlXF.png" height="80%" width="80%" alt="Step 5-4"/>
+</p>
+
+<h3>&#9317; Create a Key Pair</h3>
