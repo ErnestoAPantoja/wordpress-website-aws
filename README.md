@@ -330,3 +330,20 @@ _<b>NOTE:</b> When you create a route to a route table, all the subnets associat
 
 <h3>&#9319; Accessing the Public Subnet EC2 Instance</h3>
 
+- Because I am using a Windows computer, I will be using PuTTY to SSH into the instance that was created. While it is possible to not use PuTTY since I am using a Windows 10 computer, I will still use PuTTY for practice.
+- To SSH into the instance, copy the instance's Public IPv4 address. Within the Session tab of PuTTY, enter the Host Name ec2-user@(Public IPv4 address). In the Connection tab, expand SSH and expand Auth. Select Credentials under the Auth tab. Enter the private key that was downloaded to the computer when the key pair was created earlier in the project. After you click Open, you will successfully access the EC2 instance.
+
+<p align="center">
+<img src="https://i.imgur.com/P3r8ZZR.png" height="80%" width="80%" alt="Step 8-1"/>
+</p>
+
+<p align="center">
+<img src="https://i.imgur.com/0UaATYQ.png" height="80%" width="80%" alt="Step 8-2"/>
+</p>
+
+<p align="center">
+<img src="https://i.imgur.com/a7V4UkB.png" height="80%" width="80%" alt="Step 8-3"/>
+</p>
+
+<h3>&#9320; Installing WordPress</h3>
+
