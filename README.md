@@ -303,3 +303,30 @@ _<b>NOTE:</b> When you create a route to a route table, all the subnets associat
 </p>
 
 - When a key pair is made, two keys are generated: a public key and a private key. The key on the AWS console is the public key and it will be used in the EC2 instance when it is launched. The key that is downloaded on the computer is the private key and it will be used whenever SSH is used to access an instance.
+
+<h3>&#9318; Launching a Setup Server</h3>
+
+- An EC2 instance will be launched in Public Subnet AZ1 in order to install the website and move files to the EFS. On the AWS management console, navigate to the EC2 service and select Instances (running). Click on Launch instances to get started. Use the following parameters for the instance:
+  - Name: Setup Server
+  - Application and OS Images: Amazon Linux
+  - AMI: Amazon Linux 2 AMI (Free tier eligible)
+  - Instance type: t2.micro
+  - Key pair (login): myec2key (the key pair that you created)
+  - VPC: Dev VPC
+  - Subnet: Public Subnet AZ1
+  - Firewall (security groups): SSH Security Group, ALB Security Group, Webserver Security Group
+
+<p align="center">
+<img src="https://i.imgur.com/0ZSMbeb.png" height="80%" width="80%" alt="Step 7-1"/>
+</p>
+
+<p align="center">
+<img src="https://i.imgur.com/X87q45d.png" height="80%" width="80%" alt="Step 7-2"/>
+</p>
+
+<p align="center">
+<img src="https://i.imgur.com/ut8LC58.png" height="80%" width="80%" alt="Step 7-3"/>
+</p>
+
+<h3>&#9319; Accessing the Public Subnet EC2 Instance</h3>
+
