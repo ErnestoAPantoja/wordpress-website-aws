@@ -363,3 +363,67 @@ _<b>NOTE:</b> When you create a route to a route table, all the subnets associat
   - sudo yum install -y httpd httpd-tools mod_ssl
   - sudo systemctl enable httpd
   - sudo systemctl start httpd
+
+- Next, PHP 7.4 will be installed with the following commands:
+  - sudo amazon-linux-extras enable php7.4
+  - sudo yum clean metadata
+  - sudo yum install php php-common php-pear -y
+  - sudo yum install php-{cgi,curl,mbstring,gd,mysqlnd,gettext,json,xml,fpm,intl,zip} -y
+
+- MySQL 5.7 will be installed with these commands:
+  - sudo rpm -Uvh https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm
+  - sudo rpm --import https://repo.mysql.com/RPM-GPG-KEY-mysql-2022
+  - sudo yum install mysql-community-server -y
+  - sudo systemctl enable mysqld
+  - sudo systemctl start mysqld
+
+- Some web files will need to have their permissions changed. Run these commands to set the permissions:
+  - sudo usermod -a -G apache ec2-user
+  - sudo chown -R ec2-user:apache /var/www
+  - sudo chmod 2775 /var/www && find /var/www -type d -exec sudo chmod 2775 {} \;
+  - sudo find /var/www -type f -exec sudo chmod 0664 {} \;
+  - chown apache:apache -R /var/www/html
+
+- The WordPress files will now be downloaded and moved to the html directory with the following commands:
+  - wget https://wordpress.org/latest.tar.gz
+  - tar -xzf latest.tar.gz
+  - cp -r wordpress/* /var/www/html/
+ 
+- A WordPress configuration file will have to be created and modified. Run these commands:
+  - cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
+  - nano /var/www/html/wp-config.php
+
+<p align="center">
+<img src="https://i.imgur.com/oWHtG8G.png" height="80%" width="80%" alt="Step 9-2"/>
+</p>
+
+- Within the text editor for the configuration file, some information needs to be inserted from the RDS instance that was created earlier in the project. Go to the RDS console from AWS to get this information. In the database that was created, open the Configuration tab to get the necessary information.
+  - Copy the DB name from the Configuration tab and replace it where database_name_here is.
+
+_<b>NOTE:</b> Make sure to copy the DB name and NOT the DB instance ID. They refer to different things and are not the same thing. Make sure what you are copying is the DB name. Refer to the image below. The Database instance ID is highlighted here. DB name is located underneath it._
+
+<p align="center">
+<img src="https://i.imgur.com/ikK6jvP.png" height="80%" width="80%" alt="Step 9-3"/>
+</p>
+
+- The next things to change in the file are the username and password for the RDS database. Enter the master username and password for the database when it was created. Replace username_here and password_here respectively.
+- The next thing to change is the database hostname in the file. The database hostname will be the endpoint of the RDS instance. Return to the RDS console and open the Connectivity & security. Copy the endpoint and replace localhost within the configuration file.
+
+<p align="center">
+<img src="https://i.imgur.com/SzI29kR.png" height="80%" width="80%" alt="Step 9-4"/>
+</p>
+
+- Now that the necessary information is inserted in the configuration file, the EC2 instance will now be able to connect to the RDS instance. Save all the changes and run the last command to restart the Apache web server:
+  - service httpd restart
+- Return to the EC2 console and copy the Public IPv4 address of the Setup Server. Open a new tab in the web browser and paste the IPv4 address. When everything has been configured correctly, a WordPress welcome page will be shown. Enter the necessary information to create the admin account and website. The Setup Server cannot be deleted yet as the next step is to create the application load balancer.
+
+<p align="center">
+<img src="https://i.imgur.com/TFawYpa.png" height="80%" width="80%" alt="Step 9-5"/>
+</p>
+
+<p align="center">
+<img src="https://i.imgur.com/xW5Phri.png" height="80%" width="80%" alt="Step 9-6"/>
+</p>
+
+<h3>&#9321; Create the Application Load Balancer</h3>
+
