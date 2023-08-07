@@ -608,3 +608,17 @@ _<b>NOTE:</b> Make sure to copy the DB name and NOT the DB instance ID. They ref
 </p>
 
 <h3>&#9325; Launch a Bastion Host</h3>
+
+- In order to SSH into the instances in the private subnets, an EC2 instance needs to be launched in a public subnet. This istance is called a bastion host. First, the instance in the public subnet needs to be accessed with SSH. From the public subnet instance, SSH into the private subnet. Navigate to the EC2 service and create a new instance to get started. Use the following configurations to make the bastion host:
+  - Name: Bastion Host
+  - Application and OS Images: Amazon Linux
+  - Amazon Machine Image: Amazon Linux 2 AMI (free tier eligible)
+  - Instance type: t2.micro
+  - Key pair: myec2key (the key pair that was created earlier)
+  - VPC: Dev VPC
+  - Subnet: Public Subnet AZ1
+  - Auto-assign Public IP: Enable
+  - Firewall (security groups): SSH Security Group
+ 
+<h3>&#9326; SSH into Private Subnets</h3>
+
