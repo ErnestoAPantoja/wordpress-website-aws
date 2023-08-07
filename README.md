@@ -656,3 +656,69 @@ _<b>NOTE:</b> Make sure to copy the DB name and NOT the DB instance ID. They ref
 </p>
 
 <h3>&#9327; Create an HTTPS Listener</h3>
+
+- The application load balancer will need an HTTPS listener now that the SSL certificate has been issued. It is needed in order to secure the website. Navigate to the Load Balancers tab in the EC2 service. Select Dev-ALB and scroll to the Listeners and rules section.
+
+<p align="center">
+<img src="https://i.imgur.com/tTRVKCu.png" height="80%" width="80%" alt="Step 16-1"/>
+</p>
+
+- Click Add listener and use the following configurations:
+  - Protocol: HTTPS
+  - Action types: Forward to target groups
+  - Target group: Dev-TG
+  - Default SSL/TLS certificate: The certificate that you created earlier
+ 
+<p align="center">
+<img src="https://i.imgur.com/DVnn84n.png" height="80%" width="80%" alt="Step 16-2"/>
+</p>
+
+<p align="center">
+<img src="https://i.imgur.com/OWraWri.png" height="80%" width="80%" alt="Step 16-3"/>
+</p>
+
+- The HTTPS listener will be edited after it has been created. This will allow HTTP traffic to be redirected to HTTPS. Select the HTTP listener and click Edit listener.
+
+<p align="center">
+<img src="https://i.imgur.com/BiRNsbl.png" height="80%" width="80%" alt="Step 16-4"/>
+</p>
+
+- Under Default actions, select Redirect to URL. The Protocol should be HTTPS. Save the changes.
+
+<p align="center">
+<img src="https://i.imgur.com/JYviuw6.png" height="80%" width="80%" alt="Step 16-5"/>
+</p>
+
+- The next step is to SSH into one of the Private App Subnets. Webserver AZ1 will accessed via the bastion host.
+  - Escalate to root privileges with the command sudo su. Now that you are the root user, enter this command:
+  - nano /var/www/html/wp-config.php
+
+<p align="center">
+<img src="https://i.imgur.com/nJGR5Kw.png" height="80%" width="80%" alt="Step 16-6"/>
+</p>
+
+- While in the text editor, paste the following code into the text editor in the location specified within the image.
+
+<p align="center">
+<img src="https://i.imgur.com/A3w4TLE.png" height="80%" width="80%" alt="Step 16-7"/>
+</p>
+
+<p align="center">
+<img src="https://i.imgur.com/biow1us.png" height="80%" width="80%" alt="Step 16-8"/>
+</p>
+
+- Now that the configuration file has been modified, access the website in a new tab. Enter the domain name with HTTPS in the URL. When the website is accessed, the connection is now secure. Because the URL has changed again, update the WordPress settings as an admin to reflect the change.
+
+<p align="center">
+<img src="https://i.imgur.com/shuvAaU.png" height="80%" width="80%" alt="Step 16-9"/>
+</p>
+
+<p align="center">
+<img src="https://i.imgur.com/dqhp8xe.png" height="80%" width="80%" alt="Step 16-10"/>
+</p>
+
+<p align="center">
+<img src="https://i.imgur.com/4tadVoA.png" height="80%" width="80%" alt="Step 16-11"/>
+</p>
+
+<h3>&#9328; Create an Auto Scaling Group</h3>
