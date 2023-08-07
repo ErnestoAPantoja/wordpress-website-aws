@@ -427,3 +427,99 @@ _<b>NOTE:</b> Make sure to copy the DB name and NOT the DB instance ID. They ref
 
 <h3>&#9321; Create the Application Load Balancer</h3>
 
+- An application load balancer will be created to distribute web traffic across EC2 instances in the Private App Subnets in the VPC. Before creating the application load balancer, new EC2 instances will be launched in the Private App Subnets. Navigate to the EC2 service to get started. Launch an instance with the following configurations:
+  - Name and Tags: Name, Webserver AZ1
+  - Application and OS Images: Amazon Linux 2 AMI (free tier eligible)
+  - Instance type: t2.micro
+  - Key pair: myec2key (the key pair that you created earlier)
+  - VPC: Dev VPC
+  - Subnet: Private App Subnet AZ1
+  - Firewall (security groups): Web Server Security Group
+- For the user data, some commands will be pasted in. This means that the commands will be run whenever the instance is booting up. Before pasting the commands in the user data, return to the EFS console and obtain the mount data that was previously used to install WordPress earlier in the project.
+
+<p align="center">
+<img src="https://i.imgur.com/mnUdGeu.png" height="80%" width="80%" alt="Step 10-1"/>
+</p>
+
+- Paste the following script into the user data section of the EC2 instance creation menu (and replace the EFS data where specified):
+  - #!/bin/bash
+  - yum update -y
+  - sudo yum install -y httpd httpd-tools mod_ssl
+  - sudo systemctl enable httpd
+  - sudo systemctl start httpd
+  - sudo amazon-linux-extras enable php7.4
+  - sudo yum clean metadata
+  - sudo yum install php php-common php-pear -y
+  - sudo yum install php-{cgi,curl,mbstring,gd,mysqlnd,gettext,json,xml,fpm,intl,zip} -y
+  - sudo rpm -Uvh https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm
+  - sudo rpm --import https://repo.mysql.com/RPM-GPG-KEY-mysql-2022
+  - sudo yum install mysql-community-server -y
+  - sudo systemctl enable mysqld
+  - sudo systemctl start mysqld
+  - echo "(EFS data):/ /var/www/html nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 0 0" >> /etc/fstab
+  - mount -a
+  - chown apache:apache -R /var/www/html
+  - sudo service httpd restart
+ 
+<p align="center">
+<img src="https://i.imgur.com/rWC269n.png" height="80%" width="80%" alt="Step 10-2"/>
+</p>
+
+- Launch a second EC2 instance while the first one is being made and use the following configurations:
+  - Name and Tags: Key - Name, Value - Webserver AZ2
+  - Application and OS Images: Amazon Linux 2 AMI (free tier eligible)
+  - Instance type: t2.micro
+  - Key pair: myec2key (the key pair that you created earlier)
+  - VPC: Dev VPC
+  - Subnet: Private App Subnet AZ2
+  - Firewall (security groups): Web Server Security Group
+  - User data: the same user data script that was used in the first instance
+
+- After creating the two EC2 instances, the next step is to create the target group and put the instances in the target group to allow the application load balancer to route traffic to them. On the left-hand menu, open the Target Groups tab and click on Create target group. Use the following configurations to make the target group:
+  - Target type: Instances
+  - Name: Dev-TG
+  - Protocol: HTTP
+  - VPC: Dev VPC
+  - Advanced health check settings - Success codes: 200,301,302
+  - Register targets: Webserver AZ1 and Webserver AZ2 (click on Include as pending below to confirm the choices)
+
+<p align="center">
+<img src="https://i.imgur.com/NtCmQyg.png" height="80%" width="80%" alt="Step 10-3"/>
+</p>
+
+- The next step is to create the application load balancer. Select Load Balancers on the left-hand menu and click on Create load balancer. Use these configurations to create the application load balancer:
+  - Load balancer name: Dev-ALB
+  - Scheme: Internet-facing
+  - IP address type: IPv4
+  - VPC: Dev VPC
+  - Mappings: us-east-1a - Public Subnet AZ, us-east-1b - Public Subnet AZ2
+  - Security groups: ALB Security Group
+  - Listener HTTP 80 Default Action: Forward to Dev-TG
+
+- After the application load balancer is active, copy the DNS name and paste it in a new browser tab. The website can now be accessed using the DNS name of the application load balancer.
+
+<p align="center">
+<img src="https://i.imgur.com/D2plyij.png" height="80%" width="80%" alt="Step 10-4"/>
+</p>
+
+<p align="center">
+<img src="https://i.imgur.com/vC2fNyf.png" height="80%" width="80%" alt="Step 10-5"/>
+</p>
+
+- Any time the address is changed, it is necessary to go into the WordPress settings as an admin and change the domain address there. Before accessing the settings, copy the domain name of the application load balancer. After the domain name, type /wp-admin and press Enter. You will be prompted to log in as the admin using the WordPress crendentials when the website was first made. Click on Settings and paste the domain address in the WordPress Address and Site Address boxes (remove the / at the end of the address if it is retained).
+
+<p align="center">
+<img src="https://i.imgur.com/NSlCbst.png" height="80%" width="80%" alt="Step 10-6"/>
+</p>
+
+<p align="center">
+<img src="https://i.imgur.com/p3LzW2V.png" height="80%" width="80%" alt="Step 10-7"/>
+</p>
+
+- Now that the instances are launched in the Private App Subnets and the website can be accessed via the DNS name of the application load balancer, there is no need to have the Setup Server running. Terminate the Setup Server on the EC2 console.
+
+<p align="center">
+<img src="https://i.imgur.com/rVWN8te.png" height="80%" width="80%" alt="Step 10-8"/>
+</p>
+
+<h3>&#9322; Register a Domain Name</h3>
