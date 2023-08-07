@@ -581,3 +581,30 @@ _<b>NOTE:</b> Make sure to copy the DB name and NOT the DB instance ID. They ref
 
 <h3>&#9324; Register an SSL Certificate</h3>
 
+- SSL certificates are necessary to encrypt traffic between the web servers and web browser. This is a concept referred to as encryption in transit. All traffic from the website is currently not secure. The website will now have an appropriate SSL certificate using the Certificate Manager service on AWS. Request a public certificate from Certificate Manager to get started.
+
+<p align="center">
+<img src="https://i.imgur.com/Q5qIP9u.png" height="80%" width="80%" alt="Step 13-1"/>
+</p>
+
+- For domain names, enter the domain name that you have. Enter a second domain name and include the *. wildcard before the domain name again. Refer to the image below to see how to input the domain names. Make sure to select DNS validation and the RSA 2048 key algorithm before requesting the certificate. 
+
+<p align="center">
+<img src="https://i.imgur.com/jYpOVNq.png" height="80%" width="80%" alt="Step 13-2"/>
+</p>
+
+- When the certificate is pending validation, record sets need to be created in Route 53. This is to validate that the domain name belongs to the rightful owner. Click Create records in Route 53 and select the two domain names (this includes the wildcard that was created) to create the records. Wait a few minutes and refresh the page to see that the certificate has been issued.
+
+<p align="center">
+<img src="https://i.imgur.com/Iw6W4Px.png" height="80%" width="80%" alt="Step 13-3"/>
+</p>
+
+<p align="center">
+<img src="https://i.imgur.com/lcyJQpC.png" height="80%" width="80%" alt="Step 13-4"/>
+</p>
+
+<p align="center">
+<img src="https://i.imgur.com/08pcLbA.png" height="80%" width="80%" alt="Step 13-5"/>
+</p>
+
+<h3>&#9325; Launch a Bastion Host</h3>
