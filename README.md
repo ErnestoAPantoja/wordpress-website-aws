@@ -540,3 +540,44 @@ _<b>NOTE:</b> Make sure to copy the DB name and NOT the DB instance ID. They ref
 </p>
 
 <h3>&#9323; Create a Record Set</h3>
+
+- After getting a registered domain name, a record set will be created in Route 53 to access the website with the domain name. Navigate to the Route 53 service and click on Hosted zones to get started. Select the domain name and click on Create record. Use the following configurations to create the record:
+  - Record name: www
+  - Record type: A
+  - Toggle Alias next to Route Traffic to
+  - Route Traffic to: Alias to Application and Classic Load Balancer
+  - Region: US East (N. Virginia) [us-east-1]
+  - Load balancer: The application load balancer created earlier
+
+<p align="center">
+<img src="https://i.imgur.com/NNt8evg.png" height="80%" width="80%" alt="Step 12-1"/>
+</p>
+
+- Now that the record set is made, the website can now be accessed using the domain name. Select the record that was created and copy the record name. Paste the record name into a new browser tab and the website will be accessed.
+
+<p align="center">
+<img src="https://i.imgur.com/RBD6WfA.png" height="80%" width="80%" alt="Step 12-2"/>
+</p>
+
+<p align="center">
+<img src="https://i.imgur.com/ecG8l6L.png" height="80%" width="80%" alt="Step 12-3"/>
+</p>
+
+- Since the domain name has changed once again, it is time to update the WordPress URL settings to reflect this. Repeat the steps from updating the URL name after creating the application load balancer.
+
+<p align="center">
+<img src="https://i.imgur.com/IKBY67i.png" height="80%" width="80%" alt="Step 12-4"/>
+</p>
+
+<p align="center">
+<img src="https://i.imgur.com/okdHD17.png" height="80%" width="80%" alt="Step 12-5"/>
+</p>
+
+<p align="center">
+<img src="https://i.imgur.com/MfEgxox.png" height="80%" width="80%" alt="Step 12-6"/>
+</p>
+
+- The site URL will now be the domain name!
+
+<h3>&#9324; Register an SSL Certificate</h3>
+
