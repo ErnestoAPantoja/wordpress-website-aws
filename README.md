@@ -523,3 +523,20 @@ _<b>NOTE:</b> Make sure to copy the DB name and NOT the DB instance ID. They ref
 </p>
 
 <h3>&#9322; Register a Domain Name</h3>
+
+- A domain name will be registered with Route 53 to be used as the url for the WordPress website. This domain name will be used instead of the DNS name of the application load balancer. Navigate to the Route 53 service on AWS to get started. Click on Registered domains to get started.
+  - I am registering ernestoawswebsitelab.com for the purposes of the project. It will cost $13 to register the domain name. Enter the contact information to complete the transaction and make sure privacy protection is enabled. Give at least 15 minutes for the domain name to be registered. It may take longer for the registration to go through, just be patient.
+ 
+<p align="center">
+<img src="https://i.imgur.com/axFpFkN.png" height="80%" width="80%" alt="Step 11-1"/>
+</p>
+
+<p align="center">
+<img src="https://i.imgur.com/yaxmGAz.png" height="80%" width="80%" alt="Step 11-2"/>
+</p>
+
+<p align="center">
+<img src="https://i.imgur.com/2pBLEFk.png" height="80%" width="80%" alt="Step 11-3"/>
+</p>
+
+<h3>&#9323; Create a Record Set</h3>
