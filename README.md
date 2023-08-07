@@ -722,3 +722,51 @@ _<b>NOTE:</b> Make sure to copy the DB name and NOT the DB instance ID. They ref
 </p>
 
 <h3>&#9328; Create an Auto Scaling Group</h3>
+
+- An auto scaling group will be made to dynamically create and scale web servers in the Private App Subnets. This is to make the website highly available, scalable, fault-tolerant, and elastic. Before making the auto scaling group, terminate Webserver AZ1 and AZ2 from the EC2 console.
+
+<p align="center">
+<img src="https://i.imgur.com/FoXfHP1.png" height="80%" width="80%" alt="Step 17-1"/>
+</p>
+
+- A launch template will be made to contain the configurations of the EC2 instances that are created in the auto scaling gorup. Select Launch Templates from the land-hand menu and click Create launch template. Use the following configurations to create the launch template:
+  - Launch template name: Dev-Launch-Template
+  - Description: Launch Template for ASG
+  - Enable Auto Scaling guidance
+  - Application and OS Images: Amazon Linux
+  - Amazon Machine Image: Amazon Linux 2 AMI (free tier eligible)
+  - Instance type: t2.micro
+  - Key pair: myec2key
+  - Firewall (security groups): Web Server Security Group
+- Before creating the launch template, insert the same script used to create the EC2 instance for the application load balancer (and make sure the EFS data is correct).
+
+<p align="center">
+<img src="https://i.imgur.com/jDeOgMq.png" height="80%" width="80%" alt="Step 17-2"/>
+</p>
+
+<p align="center">
+<img src="https://i.imgur.com/7Ba46zW.png" height="80%" width="80%" alt="Step 17-3"/>
+</p>
+
+- Now that the launch template is made, the auto scaling group can now be created. Select Auto Scaling Groups on the left-hand menu and click Create Auto Scaling group. Use the following configurations to create the Auto Scaling group:
+  - Auto Scaling gorup name: Dev-ASG
+  - Launch template (NOT Launch configuration): Dev-Launch-Template
+  - VPC: Dev VPC
+  - Availabilty Zones and subnets: Private App Subnet AZ1 and Private App Subnet AZ2
+  - Load balancing: Attach to an existing load balancer
+  - Attach to an existing load balancer: Choose from your load balancer target groups
+  - Existing load balancer target groups: Dev-TG | HTTP
+  - Additional health check types: Turn on Elastic Load Balancing health checks
+  - Monitoring: Enable group metrics collection within CloudWatch
+  - Group size: Desired capacity - 2, Minimum capacity - 1, Maximum capacity - 4
+  - Add notifications: Create a topic named Default_CloudWatch_Alarms_Topic with your email as the recipient
+  - Tags: Key - Name, Value - ASG-Webserver
+- After creating the Auto Scaling group, the group will now make two new instances based on the launch template.
+
+<p align="center">
+<img src="https://i.imgur.com/kiL3Pao.png" height="80%" width="80%" alt="Step 17-4"/>
+</p>
+
+<p align="center">
+<img src="https://i.imgur.com/DcUxO0T.png" height="80%" width="80%" alt="Step 17-5"/>
+</p>
