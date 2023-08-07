@@ -622,3 +622,37 @@ _<b>NOTE:</b> Make sure to copy the DB name and NOT the DB instance ID. They ref
  
 <h3>&#9326; SSH into Private Subnets</h3>
 
+- Now that the bastion host has been created, it is possible to SSH into the private subnets on the VPC. In order to do so, a PuTTY authentication agent known as Pageant needs to be installed. Search for PuTTY and select the search result that has greenend.org in the URL. Scroll down the Alternative binary files list and download and install Pageant from there.
+
+<p align="center">
+<img src="https://i.imgur.com/QDLNyEa.png" height="80%" width="80%" alt="Step 15-1"/>
+</p>
+
+- When you run Pageant, it will be a hidden icon on the bottom right. Click on its icon to open it. Click Add Key to add the private key on the computer and close the application. Once the key has been added to Pageant, it is possible to SSH into the private subnets.
+
+<p align="center">
+<img src="https://i.imgur.com/CD7l7TO.png" height="80%" width="80%" alt="Step 15-2"/>
+</p>
+
+- SSH into the bastion host to get started. Copy the bastion host's public IPv4 address and open PuTTY. For the host name, enter ec2-user@(IPv4 address). Expand the SSH and select Auth. Check Allow agent forwarding and click Open to access the bastion host. You will know if you have accessed the bastion host if the IP address on PuTTY matches the Private IPv4 address of the bastion host on the AWS console.
+
+<p align="center">
+<img src="https://i.imgur.com/s6X4Mjv.png" height="80%" width="80%" alt="Step 15-3"/>
+</p>
+
+<p align="center">
+<img src="https://i.imgur.com/L8WFnQR.png" height="80%" width="80%" alt="Step 15-4"/>
+</p>
+
+<p align="center">
+<img src="https://i.imgur.com/BODeBt4.png" height="80%" width="80%" alt="Step 15-5"/>
+</p>
+
+- It is now possible to SSH into a Private App Subnet. On the AWS console, select Webserver AZ1 and copy its Private IPv4 address. On PuTTY, enter the following command:
+  - ssh ec2-user@(Private IP address)
+
+<p align="center">
+<img src="https://i.imgur.com/ZqIRIF8.png" height="80%" width="80%" alt="Step 15-6"/>
+</p>
+
+<h3>&#9327; Create an HTTPS Listener</h3>
