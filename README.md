@@ -770,3 +770,37 @@ _<b>NOTE:</b> Make sure to copy the DB name and NOT the DB instance ID. They ref
 <p align="center">
 <img src="https://i.imgur.com/DcUxO0T.png" height="80%" width="80%" alt="Step 17-5"/>
 </p>
+
+- The website will take a few minutes to become online once again because the instances need to be created. Their status can be checked in the Target Groups tab. The Health status will show whether or not an instance is healthy. If the health status is unhealthy, wait a few minutes to allow all the user data script to run and install the software. Refreshing the page will update the status to healthy after time has passed.
+
+<p align="center">
+<img src="https://i.imgur.com/VJxwuUQ.png" height="80%" width="80%" alt="Step 17-6"/>
+</p>
+
+- All that is left is to log in to the website as an admin and customize the website. The Appearance tab on WordPress will allow different themes and other customization items to be used to make the website more presentable.
+
+<p align="center">
+<img src="https://i.imgur.com/zisDtwJ.png" height="80%" width="80%" alt="Step 17-7"/>
+</p>
+
+- The website is now complete!
+
+<h3>&#9329; Clean Up</h3>
+
+- I took down the website in order to save money because AWS charges based on waht resources are used and for how long. Resources will have to be deleted in a specific order because some resources are reliant on other resources and they won't be deleted otherwise. If you would like to save on money and take down the website, delete the resources in this order:
+  - Auto Scaling group
+  - Launch template
+  - Application load balancer
+  - Target Group
+  - RDS instance
+  - Bastion host
+  - EFS
+  - Security groups (except for the default security group)
+  - NAT gateways
+  - VPC
+  - Elastic IPs (AWS will charge elastic IPs that are unusued and are not associated with a resource)
+  - Record Set (A record)
+ 
+<h2>Lessons Learned </h2>
+
+This project has made me become more familiar with the services offered in AWS. The website is reliant on many different components that work together to keep it afloat. I was already familiar with some of the services because I studied for the AWS Certified Cloud Practitioner. I previously studied for the Solutions Architect Associate exam, but I have not taken the exam. While doing this project, I refered to some of the notes I took while studying for the Solutions Architect Associate exam. I did not have any problems making the website because I tackled each task one step at a time. At a glance, there is a lot of work that needs to be done to make a dynamic website on AWS. I thought I would be overwhelemed, but that was far from the truth. Now, I have a much deeper understanding of how to handle certain tasks when using services on AWS in order to make future projects work.
