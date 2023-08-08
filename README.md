@@ -1,4 +1,4 @@
-<h1>Deploying a WordPress website on AWS</h1>
+<h1>Deploying a WordPress Website on AWS</h1>
 
 I have created a dynamic website using AWS services. The purpose behind this project is to build on what I have learned from the AWS Certified Cloud Practitioner certification and flesh out concepts I will be familiar with for future AWS projects and certification exams. I used a variety of different AWS services to build the website, and I took the website down after building it to save money. I spent about $30 to do this project over the span of a few days. I am using my Windows 10 computer in order to do this project and am using PuTTY to get familiar with using the program. 
 
@@ -9,35 +9,35 @@ _<b>NOTE:</b> This project is done exclusively in the N. Virginia region (us-eas
 - AWS
 - PuTTY
 - VPC (Public and Private subnets)
-- Security Groups
+- Security groups
 - EC2 instances
-- Auto Scaling Groups
-- NAT Gateways
+- Auto Scaling group
+- NAT gateways
 - RDS
-- Application Load Balancers
+- Application load balancer
 - Route 53
 - Certificate Manager
 - EFS
 
 <h2>High-Level Deployment and Configuration Steps</h2>
 
-- Setup a VPC.
-- Setup NAT gateways.
-- Create security groups.
-- Launch an RDS instance.
-- Enable EFS.
-- Create a key pair and install PuTTY
-- Setup a server
-- SSH instance
+- Create a VPC
+- Setup NAT gateways
+- Create security groups
+- Launch an RDS instance
+- Enable EFS
+- Create a key pair
+- Launch a server
+- Access public subnet instance with SSH
 - Install WordPress
-- Configure an Application Load Balancer
+- Create an Application Load Balancer
 - Claim a domain name on Route 53
 - Create route records on Route 53
 - Obtain an SSL certificate
 - Launch a bastion host
 - SSH into private subnets
-- HTTPS listener
-- Create Auto Scaling Groups
+- Create an HTTPS listener
+- Create an Auto Scaling group
 
 <h2>Step Process</h2>
 
