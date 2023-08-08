@@ -347,7 +347,7 @@ _<b>NOTE:</b> When you create a route to a route table, all the subnets associat
 
 <h3>&#9320; Installing WordPress</h3>
 
-- Once the EC2 instance has been accessed through SSH, commands will have to be run in order to install the WordPress website. Before continuing, make sure that the relevant EFS mount data has been copied from a previous step in the project. In the EFS that was created earlier, the Attach menu will show the code that is necessary to mount the EFS. Make sure to copy the highlighted section in the image below.
+- Once the EC2 instance has been accessed through SSH, commands will have to be run in order to install the WordPress website. Before continuing, make sure that the relevant EFS mount data has been copied from a previous step in the project. In the EFS that was created earlier, the <b>Attach</b> menu will show the code that is necessary to mount the EFS. Make sure to copy the highlighted section in the image below.
 
 <p align="center">
 <img src="https://i.imgur.com/snqtoNi.png" height="80%" width="80%" alt="Step 9-1"/>
@@ -397,17 +397,17 @@ _<b>NOTE:</b> When you create a route to a route table, all the subnets associat
 <img src="https://i.imgur.com/oWHtG8G.png" height="80%" width="80%" alt="Step 9-2"/>
 </p>
 
-- Within the text editor for the configuration file, some information needs to be inserted from the RDS instance that was created earlier in the project. Go to the RDS console from AWS to get this information. In the database that was created, open the Configuration tab to get the necessary information.
-  - Copy the DB name from the Configuration tab and replace it where database_name_here is.
+- Within the text editor for the configuration file, some information needs to be inserted from the RDS instance that was created earlier in the project. Go to the <b>RDS</b> console from AWS to get this information. In the database that was created, open the <b>Configuration</b> tab to get the necessary information.
+  - Copy the <b>DB name</b> from the <b>Configuration</b> tab and replace it where database_name_here is.
 
-_<b>NOTE:</b> Make sure to copy the DB name and NOT the DB instance ID. They refer to different things and are not the same thing. Make sure what you are copying is the DB name. Refer to the image below. The Database instance ID is highlighted here. DB name is located underneath it._
+_<b>NOTE:</b> Make sure to copy the DB name and <b>NOT</b> the DB instance ID. They refer to different things and are not the same. Make sure what you are copying is the DB name. Refer to the image below. The Database instance ID is highlighted here. DB name is located underneath it._
 
 <p align="center">
 <img src="https://i.imgur.com/ikK6jvP.png" height="80%" width="80%" alt="Step 9-3"/>
 </p>
 
 - The next things to change in the file are the username and password for the RDS database. Enter the master username and password for the database when it was created. Replace username_here and password_here respectively.
-- The next thing to change is the database hostname in the file. The database hostname will be the endpoint of the RDS instance. Return to the RDS console and open the Connectivity & security. Copy the endpoint and replace localhost within the configuration file.
+- The next thing to change is the database hostname in the file. The database hostname will be the endpoint of the RDS instance. Return to the RDS console and open the <b>Connectivity & security</b> tab. Copy the endpoint and replace localhost within the configuration file.
 
 <p align="center">
 <img src="https://i.imgur.com/SzI29kR.png" height="80%" width="80%" alt="Step 9-4"/>
@@ -415,7 +415,7 @@ _<b>NOTE:</b> Make sure to copy the DB name and NOT the DB instance ID. They ref
 
 - Now that the necessary information is inserted in the configuration file, the EC2 instance will now be able to connect to the RDS instance. Save all the changes and run the last command to restart the Apache web server:
   - service httpd restart
-- Return to the EC2 console and copy the Public IPv4 address of the Setup Server. Open a new tab in the web browser and paste the IPv4 address. When everything has been configured correctly, a WordPress welcome page will be shown. Enter the necessary information to create the admin account and website. The Setup Server cannot be deleted yet as the next step is to create the application load balancer.
+- Return to the EC2 console and copy the <b>Public IPv4 address</b> of the Setup Server. Open a new tab in the web browser and paste the IPv4 address. When everything has been configured correctly, a WordPress welcome page will be shown. Enter the necessary information to create the admin account and website. The Setup Server cannot be deleted yet as the next step is to create the application load balancer.
 
 <p align="center">
 <img src="https://i.imgur.com/TFawYpa.png" height="80%" width="80%" alt="Step 9-5"/>
@@ -427,15 +427,15 @@ _<b>NOTE:</b> Make sure to copy the DB name and NOT the DB instance ID. They ref
 
 <h3>&#9321; Create the Application Load Balancer</h3>
 
-- An application load balancer will be created to distribute web traffic across EC2 instances in the Private App Subnets in the VPC. Before creating the application load balancer, new EC2 instances will be launched in the Private App Subnets. Navigate to the EC2 service to get started. Launch an instance with the following configurations:
-  - Name and Tags: Name, Webserver AZ1
-  - Application and OS Images: Amazon Linux 2 AMI (free tier eligible)
-  - Instance type: t2.micro
-  - Key pair: myec2key (the key pair that you created earlier)
-  - VPC: Dev VPC
-  - Subnet: Private App Subnet AZ1
-  - Firewall (security groups): Web Server Security Group
-- For the user data, some commands will be pasted in. This means that the commands will be run whenever the instance is booting up. Before pasting the commands in the user data, return to the EFS console and obtain the mount data that was previously used to install WordPress earlier in the project.
+- An application load balancer will be created to distribute web traffic across EC2 instances in the Private App Subnets in the VPC. Before creating the application load balancer, new EC2 instances will be launched in the Private App Subnets. Navigate to the <b>EC2</b> service to get started. Launch an instance with the following configurations:
+  - <b>Name and Tags</b>: Name, Webserver AZ1
+  - <b>Application and OS Images</b>: Amazon Linux 2 AMI (free tier eligible)
+  - <b>Instance type</b>: t2.micro
+  - <b>Key pair</b>: myec2key (the key pair that you created earlier)
+  - <b>VPC</b>: Dev VPC
+  - <b>Subnet</b>: Private App Subnet AZ1
+  - <b>Firewall (security groups)</b>: Web Server Security Group
+- For the user data, some commands will be pasted in. This means that the commands will be run whenever the instance is booting up. Before pasting the commands in the user data, return to the <b>EFS</b> console and obtain the mount data that was previously used to install WordPress earlier in the project.
 
 <p align="center">
 <img src="https://i.imgur.com/mnUdGeu.png" height="80%" width="80%" alt="Step 10-1"/>
@@ -466,35 +466,35 @@ _<b>NOTE:</b> Make sure to copy the DB name and NOT the DB instance ID. They ref
 </p>
 
 - Launch a second EC2 instance while the first one is being made and use the following configurations:
-  - Name and Tags: Key - Name, Value - Webserver AZ2
-  - Application and OS Images: Amazon Linux 2 AMI (free tier eligible)
-  - Instance type: t2.micro
-  - Key pair: myec2key (the key pair that you created earlier)
-  - VPC: Dev VPC
-  - Subnet: Private App Subnet AZ2
-  - Firewall (security groups): Web Server Security Group
-  - User data: the same user data script that was used in the first instance
+  - <b>Name and Tags</b>: Key - Name, Value - Webserver AZ2
+  - <b>Application and OS Images</b>: Amazon Linux 2 AMI (free tier eligible)
+  - <b>Instance type</b>: t2.micro
+  - <b>Key pair</b>: myec2key (the key pair that you created earlier)
+  - <b>VPC</b>: Dev VPC
+  - <b>Subnet</b>: Private App Subnet AZ2
+  - <b>Firewall (security groups)</b>: Web Server Security Group
+  - <b>User data</b>: the same user data script that was used in the first instance
 
-- After creating the two EC2 instances, the next step is to create the target group and put the instances in the target group to allow the application load balancer to route traffic to them. On the left-hand menu, open the Target Groups tab and click on Create target group. Use the following configurations to make the target group:
-  - Target type: Instances
-  - Name: Dev-TG
-  - Protocol: HTTP
-  - VPC: Dev VPC
-  - Advanced health check settings - Success codes: 200,301,302
-  - Register targets: Webserver AZ1 and Webserver AZ2 (click on Include as pending below to confirm the choices)
+- After creating the two EC2 instances, the next step is to create the target group and put the instances in the target group to allow the application load balancer to route traffic to them. On the left-hand menu, open the <b>Target Groups</b> tab and click on <b>Create target group</b>. Use the following configurations to make the target group:
+  - <b>Target type</b>: Instances
+  - <b>Name</b>: Dev-TG
+  - <b>Protocol</b>: HTTP
+  - <b>VPC</b>: Dev VPC
+  - <b>Advanced health check settings - Success codes</b>: 200,301,302
+  - <b>Register targets</b>: Webserver AZ1 and Webserver AZ2 (click on Include as pending below to confirm the choices)
 
 <p align="center">
 <img src="https://i.imgur.com/NtCmQyg.png" height="80%" width="80%" alt="Step 10-3"/>
 </p>
 
-- The next step is to create the application load balancer. Select Load Balancers on the left-hand menu and click on Create load balancer. Use these configurations to create the application load balancer:
-  - Load balancer name: Dev-ALB
-  - Scheme: Internet-facing
-  - IP address type: IPv4
-  - VPC: Dev VPC
-  - Mappings: us-east-1a - Public Subnet AZ, us-east-1b - Public Subnet AZ2
-  - Security groups: ALB Security Group
-  - Listener HTTP 80 Default Action: Forward to Dev-TG
+- The next step is to create the application load balancer. Select <b>Load Balancers</b> on the left-hand menu and click on <b>Create load balancer</b>. Use these configurations to create the application load balancer:
+  - <b>Load balancer name</b>: Dev-ALB
+  - <b>Scheme</b>: Internet-facing
+  - <b>IP address type</b>: IPv4
+  - <b>VPC</b>: Dev VPC
+  - <b>Mappings</b>: us-east-1a - Public Subnet AZ, us-east-1b - Public Subnet AZ2
+  - <b>Security groups</b>: ALB Security Group
+  - <b>Listener HTTP 80 Default Action</b>: Forward to Dev-TG
 
 - After the application load balancer is active, copy the DNS name and paste it in a new browser tab. The website can now be accessed using the DNS name of the application load balancer.
 
@@ -506,7 +506,7 @@ _<b>NOTE:</b> Make sure to copy the DB name and NOT the DB instance ID. They ref
 <img src="https://i.imgur.com/vC2fNyf.png" height="80%" width="80%" alt="Step 10-5"/>
 </p>
 
-- Any time the address is changed, it is necessary to go into the WordPress settings as an admin and change the domain address there. Before accessing the settings, copy the domain name of the application load balancer. After the domain name, type /wp-admin and press Enter. You will be prompted to log in as the admin using the WordPress crendentials when the website was first made. Click on Settings and paste the domain address in the WordPress Address and Site Address boxes (remove the / at the end of the address if it is retained).
+- Any time the address is changed, it is necessary to go into the WordPress settings as an admin and change the domain address there. Before accessing the settings, copy the domain name of the application load balancer. After the domain name, type /wp-admin and press Enter. You will be prompted to log in as the admin using the WordPress crendentials when the website was first made. Click on <b>Settings</b> and paste the domain address in the <b>WordPress Address</b> and <b>Site Address</b> boxes (remove the / at the end of the address if it is retained).
 
 <p align="center">
 <img src="https://i.imgur.com/NSlCbst.png" height="80%" width="80%" alt="Step 10-6"/>
@@ -524,8 +524,10 @@ _<b>NOTE:</b> Make sure to copy the DB name and NOT the DB instance ID. They ref
 
 <h3>&#9322; Register a Domain Name</h3>
 
-- A domain name will be registered with Route 53 to be used as the url for the WordPress website. This domain name will be used instead of the DNS name of the application load balancer. Navigate to the Route 53 service on AWS to get started. Click on Registered domains to get started.
+- A domain name will be registered with Route 53 to be used as the url for the WordPress website. This domain name will be used instead of the DNS name of the application load balancer. Navigate to the <b>Route 53</b> service on AWS to get started. Click on <b>Registered domains</b> to get started.
   - I am registering ernestoawswebsitelab.com for the purposes of the project. It will cost $13 to register the domain name. Enter the contact information to complete the transaction and make sure privacy protection is enabled. Give at least 15 minutes for the domain name to be registered. It may take longer for the registration to go through, just be patient.
+ 
+_<b>NOTE:</b> This project can use any domain that you own, even ones that are regsitered with other providers such as GoDaddy. Route 53 is used for the purposes of the project._
  
 <p align="center">
 <img src="https://i.imgur.com/axFpFkN.png" height="80%" width="80%" alt="Step 11-1"/>
