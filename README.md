@@ -49,14 +49,14 @@ _<b>NOTE:</b> This project is done exclusively in the N. Virginia region (us-eas
 
 - A three-tier VPC will serve as the architecture for the project. The first tier will have the public subnets. The public subnets will host resources such as NAT gateways, an application load balancer, and eventually a bastion host. The second tier will host a private subnet. The web servers (EC2 instances) will be hosted there. The third tier will have another private subnet which will host the database necessary to complete the project. The subnets will be duplicated across multiple availability zones to increase fault tolerance and high availability. An internet gateway and route table will also be created to allow resources in the VPC to access the internet.
 
-- The VPC will be created in the N. Virginia region. From the AWS Management console, navigate to the _VPC_ service. In the VPCs menu, click <b>Create VPC</b>.
-  - Give a name to the VPC (in my case, it is Dev VPC) and enter the IPv4 CIDR block (10.0.0.0/16). Leave the rest of the settings as default and click <b>Create VPC</b>.
+- The VPC will be created in the <b>N. Virginia region</b>. From the AWS Management console, navigate to the <b>VPC</b> service. In the VPCs menu, click <b>Create VPC</b>.
+  - Give a name to the VPC <b>(Dev VPC)</b> and enter the IPv4 CIDR block <b>(10.0.0.0/16)</b>. Leave the rest of the settings as default and click <b>Create VPC</b>.
 
 <p align="center">
 <img src="https://i.imgur.com/4bpt43d.png" height="80%" width="80%" alt="Step 1-1"/>
 </p>
 
-- Next, DNS host names have to be enabled for the VPC that was created. Under Actions, select Edit VPC settings. Under DNS settings, make sure Enable DNS resolution and Enable DNS hostnames are checked and save the changes.
+- Next, DNS host names have to be enabled for the VPC that was created. Under <b>Actions</b>, select <b>Edit VPC settings</b>. Under <b>DNS settings</b>, make sure <b>Enable DNS resolution</b> and <b>Enable DNS hostnames</b> are checked and save the changes.
 
 <p align="center">
 <img src="https://i.imgur.com/RXp9haj.png" height="80%" width="80%" alt="Step 1-2"/>
@@ -66,22 +66,22 @@ _<b>NOTE:</b> This project is done exclusively in the N. Virginia region (us-eas
 <img src="https://i.imgur.com/nnqQFcZ.png" height="80%" width="80%" alt="Step 1-3"/>
 </p>
 
-- An internet gateway will now be created for the VPC. On the left-hand menu, select Internet Gateways. Click Create internet gateway.
-  - Give a name for the internet gateway (in my case, it is Dev Internet Gateway) and create it.
+- An internet gateway will now be created for the VPC. On the left-hand menu, select <b>Internet Gateways</b>. Click <b>Create internet gateway</b>.
+  - Give a name for the internet gateway <b>(Dev Internet Gateway)</b> and create it.
 
 <p align="center">
 <img src="https://i.imgur.com/P984xtj.png" height="80%" width="80%" alt="Step 1-4"/>
 </p>
 
-- After creating the internet gateway, it will have to be attached to the VPC. This is to ensure the VPC can communicate with the internet. There will be an option that says to Attach to a VPC after the internet gateway has been created.
+- After creating the internet gateway, it will have to be attached to the VPC. This is to ensure the VPC can communicate with the internet. There will be an option that says to <b>Attach to a VPC</b> after the internet gateway has been created.
   - One thing to note is that you can only attach one internet gateway to one VPC. When you go to attach an internet gateway to a VPC on AWS, you can only select VPCs that do not have internet gateways.
 
 <p align="center">
 <img src="https://i.imgur.com/VaRicio.png" height="80%" width="80%" alt="Step 1-5"/>
 </p>
 
-- Now that the internet gateway is attached to the VPC, public subnets will be created in two availability zones (us-east-1a and us-east-1b).
-  - Select the Subnets tab on the left-hand menu. Click Create subnet. When creating your public subnets, make sure the Dev VPC is selected. For the first public subnet, name it Public Subnet AZ1 and make sure it is in the us-east-1a availability zone. Its IPv4 CIDR block should be 10.0.0.0/24. For the second public subnet, name it Public Subnet AZ2 and make sure it is in the us-east-1b availability zone. Its IPv4 CIDR block should be 10.0.1.0/24.
+- Now that the internet gateway is attached to the VPC, public subnets will be created in two availability zones <b>(us-east-1a and us-east-1b)</b>.
+  - Select the <b>Subnets</b> tab on the left-hand menu. Click <b>Create subnet</b>. When creating your public subnets, make sure the <b>Dev VPC</b> is selected. For the first public subnet, name it <b>Public Subnet AZ1</b> and make sure it is in the <b>us-east-1a</b> availability zone. Its IPv4 CIDR block should be <b>10.0.0.0/24</b>. For the second public subnet, name it <b>Public Subnet AZ2</b> and make sure it is in the <b>us-east-1b</b> availability zone. Its IPv4 CIDR block should be <b>10.0.1.0/24</b>.
 
 <p align="center">
 <img src="https://i.imgur.com/1QhrXhb.png" height="80%" width="80%" alt="Step 1-6"/>
@@ -92,7 +92,7 @@ _<b>NOTE:</b> This project is done exclusively in the N. Virginia region (us-eas
 </p>
 
 - After the public subnets are created, the auto enable IP settings need to be enabled for both subnets. This means when an EC2 instance is launched in the subnets, the instances will be assigned an appropriate public IP address in order to communicate with the internet.
-  - For each subnet, select them and click on Edit subnet settings. Make sure Enable auto-assign public IPv4 address is turned on for both subnets and save the changes.
+  - For each subnet, select them and click on <b>Edit subnet settings</b>. Make sure <b>Enable auto-assign public IPv4 address</b> is turned on for both subnets and save the changes.
 
 <p align="center">
 <img src="https://i.imgur.com/YJbkxaN.png" height="80%" width="80%" alt="Step 1-8"/>
@@ -103,14 +103,14 @@ _<b>NOTE:</b> This project is done exclusively in the N. Virginia region (us-eas
 </p>
 
 - A public route table will now be created.
-  - Select the Route Tables tab on the left-hand menu. A route table was already created when the VPC was made. This is referred to as the main route table and is private by default. Click Create route table and name the new route table Public Route Table. It will be attached to the Dev VPC.
+  - Select the <b>Route Tables</b> tab on the left-hand menu. A route table was already created when the VPC was made. This is referred to as the main route table and is private by default. Click <b>Create route table</b> and name the new route table <b>Public Route Table</b>. It will be attached to the Dev VPC.
  
 <p align="center">
 <img src="https://i.imgur.com/s1gIgpk.png" height="80%" width="80%" alt="Step 1-10"/>
 </p>
 
 - A public route will be added to the route table that was made. This public route will route traffic to the internet.
-  - Under the Routes tab for the Public Route Table, click Edit Routes. Add a new route where the Destination is 0.0.0.0/0 (this means all traffic) and the Target is the Dev Internet Gateway. Save the changes.
+  - Under the <b>Routes</b> tab for the Public Route Table, click <b>Edit Routes</b>. Add a new route where the Destination is <b>0.0.0.0/0</b> (this means all traffic) and the Target is the <b>Dev Internet Gateway</b>. Save the changes.
 
 <p align="center">
 <img src="https://i.imgur.com/5Nt9aoP.png" height="80%" width="80%" alt="Step 1-11"/>
@@ -121,7 +121,7 @@ _<b>NOTE:</b> This project is done exclusively in the N. Virginia region (us-eas
 </p>
 
 - The next thing that needs to be done is to associate the public subnets with the public route table.
-  - While under the menu for Public Route Table, open the Subnet associations tab and scroll to Explicit subnet associations. Click on Edit subnet associations. Select both public subnets and save the associations.
+  - While under the menu for Public Route Table, open the <b>Subnet associations</b> tab and scroll to <b>Explicit subnet associations</b>. Click on <b>Edit subnet associations</b>. Select both public subnets and save the associations.
 
  <p align="center">
 <img src="https://i.imgur.com/0csGYLF.png" height="80%" width="80%" alt="Step 1-13"/>
@@ -132,7 +132,7 @@ _<b>NOTE:</b> This project is done exclusively in the N. Virginia region (us-eas
 </p>
 
 - In order to finish creating the VPC, the four private subnets need to be created.
-  - On the left-hand menu, click on Subnets and create the private subnets for the VPC. When creating your private subnets, make sure the Dev VPC is selected. For the first private subnet, name it Private App Subnet AZ1 and make sure it is in the us-east-1a availability zone. Its IPv4 CIDR block should be 10.0.2.0/24. For the second private subnet, name it Private App Subnet AZ2 and make sure it is in the us-east-1b availability zone. Its IPv4 CIDR block should be 10.0.3.0/24. For the third private subnet, name it Private Data Subnet AZ1 and make sure it is in the us-east-1a availability zone. Its IPv4 CIDR block should be 10.0.4.0/24. For the fourth private subnet, name it Private Data Subnet AZ2 and make sure it is in the us-east-1b availability zone. Its IPv4 CIDR block should be 10.0.5.0/24.
+  - On the left-hand menu, click on Subnets and create the private subnets for the VPC. When creating your private subnets, make sure the Dev VPC is selected. For the first private subnet, name it <b>Private App Subnet AZ1</b> and make sure it is in the <b>us-east-1a</b> availability zone. Its IPv4 CIDR block should be <b>10.0.2.0/24</b>. For the second private subnet, name it <b>Private App Subnet AZ2</b> and make sure it is in the <b>us-east-1b</b> availability zone. Its IPv4 CIDR block should be <b>10.0.3.0/24</b>. For the third private subnet, name it <b>Private Data Subnet AZ1</b> and make sure it is in the <b>us-east-1a</b> availability zone. Its IPv4 CIDR block should be <b>10.0.4.0/24</b>. For the fourth private subnet, name it <b>Private Data Subnet AZ2</b> and make sure it is in the <b>us-east-1b</b> availability zone. Its IPv4 CIDR block should be <b>10.0.5.0/24</b>.
 
 <p align="center">
 <img src="https://i.imgur.com/t5sHdIT.png" height="80%" width="80%" alt="Step 1-15"/>
