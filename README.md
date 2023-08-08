@@ -110,7 +110,7 @@ _<b>NOTE:</b> This project is done exclusively in the N. Virginia region (us-eas
 </p>
 
 - A public route will be added to the route table that was made. This public route will route traffic to the internet.
-  - Under the <b>Routes</b> tab for the Public Route Table, click <b>Edit Routes</b>. Add a new route where the Destination is <b>0.0.0.0/0</b> (this means all traffic) and the Target is the <b>Dev Internet Gateway</b>. Save the changes.
+  - Under the <b>Routes</b> tab for the Public Route Table, click <b>Edit Routes</b>. Add a new route where the <b>Destination</b> is <b>0.0.0.0/0</b> (this means all traffic) and the <b>Target</b> is the <b>Dev Internet Gateway</b>. Save the changes.
 
 <p align="center">
 <img src="https://i.imgur.com/5Nt9aoP.png" height="80%" width="80%" alt="Step 1-11"/>
@@ -165,13 +165,13 @@ _<b>NOTE:</b> When you create a route to a route table, all the subnets associat
 </p>
 
 - Two NAT gateways will be created within the first and second Availability Zones. One will be in Public Subnet AZ1 and will be tied to a new private route table via a route that will connect the two together. The route table will also be associated with the Private App Subnet AZ1 and Private Data Subnet AZ1 subnets within the VPC. The second NAT gateway wil be created in Public Subnet AZ1 and tied to a new private route table with a route. The second route table will be associated with the Private App Subnet AZ2 and Private Data Subnet AZ2 subnets within the VPC.
-- On the AWS management console, navigate to the VPC service. Select NAT Gateways on the VPC Dashboard. Create the first NAT gateway in Public Subnet AZ1. Name it NAT Gateway AZ1. Make sure to click Allocate Elastic IP before creating the NAT gateway.
+- On the AWS management console, navigate to the <b>VPC</b> service. Select <b>NAT Gateways</b> on the VPC Dashboard. Create the first NAT gateway in <b>Public Subnet AZ1</b>. Name it <b>NAT Gateway AZ1</b>. Make sure to click <b>Allocate Elastic IP</b> before creating the NAT gateway.
 
 <p align="center">
 <img src="https://i.imgur.com/xy6mj0E.png" height="80%" width="80%" alt="Step 2-1"/>
 </p>
 
-- Now that the NAT gateway is created, a private route table and the appropriate route will be created so there will be access to the internet. Call this new route table Private Route Table AZ1 and put it in the Dev VPC. For the route, make sure the Destination is 0.0.0.0/0 and the Target is NAT Gateway AZ1.
+- Now that the NAT gateway is created, a private route table and the appropriate route will be created so there will be access to the internet. Call this new route table <b>Private Route Table AZ1</b> and put it in the Dev VPC. For the route, make sure the <b>Destination</b> is <b>0.0.0.0/0</b> and the <b>Target</b> is <b>NAT Gateway AZ1</b>.
 
 <p align="center">
 <img src="https://i.imgur.com/ZB8sq4W.png" height="80%" width="80%" alt="Step 2-2"/>
@@ -181,17 +181,17 @@ _<b>NOTE:</b> When you create a route to a route table, all the subnets associat
 <img src="https://i.imgur.com/GsrBCwU.png" height="80%" width="80%" alt="Step 2-3"/>
 </p>
 
-- The next step is to associate the route table with Private App Subnet AZ1 and Private Data Subnet AZ1. In Private Route Table AZ1, open the Subnet associations tab and click on Edit subnet associations. Select Private App Subnet AZ1 and Private Data Subnet AZ1 and save the associations.
+- The next step is to associate the route table with Private App Subnet AZ1 and Private Data Subnet AZ1. In Private Route Table AZ1, open the <b>Subnet associations</b> tab and click on <b>Edit subnet associations</b>. Select <b>Private App Subnet AZ1</b> and <b>Private Data Subnet AZ1</b> and save the associations.
 
 <p align="center">
 <img src="https://i.imgur.com/VNPTmid.png" height="80%" width="80%" alt="Step 2-4"/>
 </p>
 
 - Repeat the previous steps in order to create a NAT gateway in Public Subnet AZ2.
-  - Name the second NAT gateway NAT Gateway AZ2.
-  - Name the second route table Private Route Table AZ2 and put it in the Dev VPC.
-  - Add a route where the Destination is 0.0.0.0/0 and the Target is NAT Gateway AZ2.
-  - Associate the route table with Private App Subnet AZ2 and Private Data Subnet AZ2.
+  - Name the second NAT gateway <b>NAT Gateway AZ2</b>.
+  - Name the second route table <b>Private Route Table AZ2</b> and put it in the Dev VPC.
+  - Add a route where the <b>Destination</b> is <b>0.0.0.0/0</b> and the <b>Target</b> is <b>NAT Gateway AZ2</b>.
+  - Associate the route table with <b>Private App Subnet AZ2</b> and <b>Private Data Subnet AZ2</b>.
 
 <h3>&#9314; Create Security Groups</h3>
 
@@ -199,8 +199,8 @@ _<b>NOTE:</b> When you create a route to a route table, all the subnets associat
 <img src="https://i.imgur.com/yw8HU3r.jpg" height="80%" width="80%" alt="Step 3"/>
 </p>
 
-- The above image details all the security groups that need to be created to continue with the project. The Application Load Balancer will have a security group to allow internet traffic (HTTP and HTTPS). One security group will be dedicated to allow SSH access to EC2 instances using your IP address. (Any time an SSH security group is created, it is always best practice to limit the source to your IP address for safety.) A security group will be created for web servers in the Private App Subnets. The sources for this security group will be limited to the ALB and SSH security groups respectively. A security group will be created for the RDS database that will be hosted on the Private Data Subnets and the source will be from the Webserver security group. An EFS security group will be made for elastic file system and use previous security groups for the sources.
-- On the AWS management console, navigate to the VPC service. On the VPC Dashboard, open the Security Groups tab. The first security group that will be created is the ALB Security Group. Click on Create security group to get started. Make sure the security group is in the Dev VPC. For Inbound rules, there will be two rules that will be added. For the Type, select HTTP and HTTPS. The Sources will come from Anywhere. To have this setting, input the CIDR block 0.0.0.0/0. Click Create security group to confirm the settings.
+- The above image details all the security groups that need to be created to continue with the project. The application load balancer will have a security group to allow internet traffic (HTTP and HTTPS). One security group will be dedicated to allow SSH access to EC2 instances using your IP address. (Any time an SSH security group is created, it is always best practice to limit the source to your IP address for safety.) A security group will be created for web servers in the Private App Subnets. The sources for this security group will be limited to the ALB and SSH security groups respectively. A security group will be created for the RDS database that will be hosted on the Private Data Subnets and the source will be from the Webserver security group. An EFS security group will be made for elastic file system and use previous security groups for the sources.
+- On the AWS management console, navigate to the <b>VPC</b> service. On the VPC Dashboard, open the <b>Security Groups</b> tab. The first security group that will be created is the <b>ALB Security Group</b>. Click on <b>Create security group</b> to get started. Make sure the security group is in the Dev VPC. For Inbound rules, there will be two rules that will be added. For the <b>Type</b>, select <b>HTTP and HTTPS</b>. The <b>Sources</b> will come from <b>Anywhere</b>. To have this setting, input the CIDR block <b>0.0.0.0/0</b>. Click <b>Create security group</b> to confirm the settings.
 
 <p align="center">
 <img src="https://i.imgur.com/RHjr9gP.png" height="80%" width="80%" alt="Step 3-1"/>
@@ -211,11 +211,11 @@ _<b>NOTE:</b> When you create a route to a route table, all the subnets associat
 </p>
 
 - Create the rest of the security groups with the following settings:
-  - SSH Security Group - VPC: Dev VPC, Inbound rules: SSH, Source: My IP
-  - Webserver Security Group - VPC: Dev VPC, Inbound rules: HTTP, Source: ALB Security Group, Inbound rules: HTTPS, Source: ALB Security Group, Inbound rules: SSH, Source: SSH Security Group.
-  - Database Security Group - VPC: Dev VPC, Inbound rules: MySQL/Aurora, Source: Webserver Security Group.
-  - EFS Security Group - VPC: Dev VPC, Inbound rules: NFS, Source: Webserver Security Group, Inbound rules: SSH, Source: SSH Security Group.
-- After the EFS Security Group is created, click on Edit inbound rules to add one more important rule:
+  - <b>SSH Security Group</b> - VPC: Dev VPC, Inbound rules: SSH, Source: My IP
+  - <b>Webserver Security Group</b> - VPC: Dev VPC, Inbound rules: HTTP, Source: ALB Security Group, Inbound rules: HTTPS, Source: ALB Security Group, Inbound rules: SSH, Source: SSH Security Group.
+  - <b>Database Security Group</b> - VPC: Dev VPC, Inbound rules: MySQL/Aurora, Source: Webserver Security Group.
+  - <b>EFS Security Group</b> - VPC: Dev VPC, Inbound rules: NFS, Source: Webserver Security Group, Inbound rules: SSH, Source: SSH Security Group.
+- After the EFS Security Group is created, click on <b>Edit inbound rules</b> to add one more important rule:
   - Add an additional NFS rule where the source is from the EFS Security Group. This rule could not be added unless the security group was already created.
 
 <p align="center">
@@ -228,29 +228,29 @@ _<b>NOTE:</b> When you create a route to a route table, all the subnets associat
 <img src="https://i.imgur.com/mx6xtMG.jpg" height="80%" width="80%" alt="Step 4"/>
 </p>
 
-- The next step is to create a RDS database in the Private Data Subnets. On the AWS management console, navigate to the RDS service to get started. Before creating the RDS instance, subnet groups need to be created. They specify which subnets the RDS database will be created in. Select Subnet groups on the RDS Dashboard and click Create DB subnet group.
-  - Name the group database subnets and place it in the Dev VPC. Under the Add subnets section, select the us-east-1a and us-east-1b Availability Zones. For Subnets, select the subnets with the CIDR blocks 10.0.4.0/24 and 10.0.5.0/24. Click Create to make the subnet group.
+- The next step is to create a RDS database in the Private Data Subnets. On the AWS management console, navigate to the <b>RDS</b> service to get started. Before creating the RDS instance, subnet groups need to be created. They specify which subnets the RDS database will be created in. Select <b>Subnet groups</b> on the RDS Dashboard and click <b>Create DB subnet group</b>.
+  - Name the group <b>database subnets</b> and place it in the Dev VPC. Under the <b>Add subnets</b> section, select the <b>us-east-1a</b> and <b>us-east-1b</b> Availability Zones. For <b>Subnets</b>, select the subnets with the CIDR blocks <b>10.0.4.0/24</b> and <b>10.0.5.0/24</b>. Click <b>Create</b> to make the subnet group.
 
 <p align="center">
 <img src="https://i.imgur.com/3N0vEt9.png" height="80%" width="80%" alt="Step 4-1"/>
 </p>
 
-- Now that the subnet group is created, it is time to make the database itself. Click on Databases on the left-hand menu and click on Create database. Use the following parameters to create the database:
-  - Creation method: Standard create
-  - Engine options: MySQL
-  - Engine Version: MySQL 5.7 (The latest version of 5.7 as in the future, more updated versions will be released beyond when I created the website.)
-  - Templates: Dev/Test
-  - DB instance identifier: dev-rds-db
-  - Master username: (Whatever you choose, in my case it is ernesto.)
-  - Master password: (Whatever you choose, in my case it is Password1. Make sure you remember this password as there will be no way to retrieve it afterward.)
-  - DB instance class: Burstable classes (db.t2.micro)
-  - VPC: Dev VPC
-  - Subnet group: database subnets
-  - VPC security group: Choose existing (Database Security Group)
-  - Availability Zone: us-east-1b
-  - Database authentication: Password authentication
-  - Initial database name: applicationdb (Make sure you expand Additional configuration to see this parameter, you must specify a name or else RDS will not make the database.)
-- After the database is created (it will take a few minutes for AWS to create), click on the database indentifier name. Under the Connectivity & security tab, take note of the Endpoint of the database. This information will be used later when connecting to the database using an EC2 instance. Under the Configuration tab, take note of the DB instance ID and DB name as they will also be used to connect to the database.
+- Now that the subnet group is created, it is time to make the database itself. Click on <b>Databases</b> on the left-hand menu and click on <b>Create database</b>. Use the following parameters to create the database:
+  - <b>Creation method</b>: Standard create
+  - <b>Engine options</b>: MySQL
+  - <b>Engine Version</b>: MySQL 5.7 (The latest version of 5.7 as in the future, more updated versions will be released beyond when I created the website.)
+  - <b>Templates</b>: Dev/Test
+  - <b>DB instance identifier</b>: dev-rds-db
+  - <b>Master username</b>: (Whatever you choose, in my case it is ernesto.)
+  - <b>Master password</b>: (Whatever you choose, in my case it is Password1. Make sure you remember this password as there will be no way to retrieve it afterward.)
+  - <b>DB instance class</b>: Burstable classes (db.t2.micro)
+  - <b>VPC</b>: Dev VPC
+  - <b>Subnet group</b>: database subnets
+  - <b>VPC security group</b>: Choose existing (Database Security Group)
+  - <b>Availability Zone</b>: us-east-1b
+  - <b>Database authentication</b>: Password authentication
+  - <b>Initial database name</b>: applicationdb (Make sure you expand Additional configuration to see this parameter, you must specify a name or else RDS will not make the database.)
+- After the database is created (it will take a few minutes for AWS to create), click on the database indentifier name. Under the <b>Connectivity & security</b> tab, take note of the <b>Endpoint</b> of the database. This information will be used later when connecting to the database using an EC2 instance. Under the <b>Configuration</b> tab, take note of the <b>DB instance ID</b> and <b>DB name</b> as they will also be used to connect to the database.
 
 <p align="center">
 <img src="https://i.imgur.com/PGn58sg.png" height="80%" width="80%" alt="Step 4-2"/>
