@@ -543,13 +543,13 @@ _<b>NOTE:</b> This project can use any domain that you own, even ones that are r
 
 <h3>&#9323; Create a Record Set</h3>
 
-- After getting a registered domain name, a record set will be created in Route 53 to access the website with the domain name. Navigate to the Route 53 service and click on Hosted zones to get started. Select the domain name and click on Create record. Use the following configurations to create the record:
-  - Record name: www
-  - Record type: A
-  - Toggle Alias next to Route Traffic to
-  - Route Traffic to: Alias to Application and Classic Load Balancer
-  - Region: US East (N. Virginia) [us-east-1]
-  - Load balancer: The application load balancer created earlier
+- After getting a registered domain name, a record set will be created in Route 53 to access the website with the domain name. Navigate to the <b>Route 53</b> service and click on <b>Hosted zones</b> to get started. Select the domain name and click on <b>Create record</b>. Use the following configurations to create the record:
+  - <b>Record name</b>: www
+  - <b>Record type</b>: A
+  - Toggle <b>Alias</b> next to Route Traffic to
+  - <b>Route Traffic to</b>: Alias to Application and Classic Load Balancer
+  - <b>Region</b>: US East (N. Virginia) [us-east-1]
+  - <b>Load balancer</b>: The application load balancer created earlier
 
 <p align="center">
 <img src="https://i.imgur.com/NNt8evg.png" height="80%" width="80%" alt="Step 12-1"/>
@@ -583,19 +583,19 @@ _<b>NOTE:</b> This project can use any domain that you own, even ones that are r
 
 <h3>&#9324; Register an SSL Certificate</h3>
 
-- SSL certificates are necessary to encrypt traffic between the web servers and web browser. This is a concept referred to as encryption in transit. All traffic from the website is currently not secure. The website will now have an appropriate SSL certificate using the Certificate Manager service on AWS. Request a public certificate from Certificate Manager to get started.
+- SSL certificates are necessary to encrypt traffic between the web servers and web browser. This is a concept referred to as encryption in transit. All traffic from the website is currently not secure. The website will now have an appropriate SSL certificate using the Certificate Manager service on AWS. Request a public certificate from <b>Certificate Manager</b> to get started.
 
 <p align="center">
 <img src="https://i.imgur.com/Q5qIP9u.png" height="80%" width="80%" alt="Step 13-1"/>
 </p>
 
-- For domain names, enter the domain name that you have. Enter a second domain name and include the *. wildcard before the domain name again. Refer to the image below to see how to input the domain names. Make sure to select DNS validation and the RSA 2048 key algorithm before requesting the certificate. 
+- For domain names, enter the domain name that you have. Enter a second domain name and include the *. wildcard before the domain name again. Refer to the image below to see how to input the domain names. Make sure to select <b>DNS validation</b> and the <b>RSA 2048</b> key algorithm before requesting the certificate. 
 
 <p align="center">
 <img src="https://i.imgur.com/jYpOVNq.png" height="80%" width="80%" alt="Step 13-2"/>
 </p>
 
-- When the certificate is pending validation, record sets need to be created in Route 53. This is to validate that the domain name belongs to the rightful owner. Click Create records in Route 53 and select the two domain names (this includes the wildcard that was created) to create the records. Wait a few minutes and refresh the page to see that the certificate has been issued.
+- When the certificate is pending validation, record sets need to be created in Route 53. This is to validate that the domain name belongs to the rightful owner. Click <b>Create records</b> in Route 53 and select the two domain names (this includes the wildcard that was created) to create the records. Wait a few minutes and refresh the page to see that the certificate has been issued.
 
 <p align="center">
 <img src="https://i.imgur.com/Iw6W4Px.png" height="80%" width="80%" alt="Step 13-3"/>
@@ -611,16 +611,16 @@ _<b>NOTE:</b> This project can use any domain that you own, even ones that are r
 
 <h3>&#9325; Launch a Bastion Host</h3>
 
-- In order to SSH into the instances in the private subnets, an EC2 instance needs to be launched in a public subnet. This istance is called a bastion host. First, the instance in the public subnet needs to be accessed with SSH. From the public subnet instance, SSH into the private subnet. Navigate to the EC2 service and create a new instance to get started. Use the following configurations to make the bastion host:
-  - Name: Bastion Host
-  - Application and OS Images: Amazon Linux
-  - Amazon Machine Image: Amazon Linux 2 AMI (free tier eligible)
-  - Instance type: t2.micro
-  - Key pair: myec2key (the key pair that was created earlier)
-  - VPC: Dev VPC
-  - Subnet: Public Subnet AZ1
-  - Auto-assign Public IP: Enable
-  - Firewall (security groups): SSH Security Group
+- In order to SSH into the instances in the private subnets, an EC2 instance needs to be launched in a public subnet. This instance is called a bastion host. First, the instance in the public subnet needs to be accessed with SSH. From the public subnet instance, SSH into the private subnet. Navigate to the <b>EC2</b> service and create a new instance to get started. Use the following configurations to make the bastion host:
+  - <b>Name</b>: Bastion Host
+  - <b>Application and OS Images</b>: Amazon Linux
+  - <b>Amazon Machine Image</b>: Amazon Linux 2 AMI (free tier eligible)
+  - <b>Instance type</b>: t2.micro
+  - <b>Key pair</b>: myec2key
+  - <b>VPC</b>: Dev VPC
+  - <b>Subnet</b>: Public Subnet AZ1
+  - <b>Auto-assign Public IP</b>: Enable
+  - <b>Firewall (security groups)</b>: SSH Security Group
  
 <h3>&#9326; SSH into Private Subnets</h3>
 
@@ -630,13 +630,13 @@ _<b>NOTE:</b> This project can use any domain that you own, even ones that are r
 <img src="https://i.imgur.com/QDLNyEa.png" height="80%" width="80%" alt="Step 15-1"/>
 </p>
 
-- When you run Pageant, it will be a hidden icon on the bottom right. Click on its icon to open it. Click Add Key to add the private key on the computer and close the application. Once the key has been added to Pageant, it is possible to SSH into the private subnets.
+- When you run Pageant, it will be a hidden icon on the bottom right. Click on its icon to open it. Click<b>Add Key</b> to add the private key on the computer and close the application. Once the key has been added to Pageant, it is possible to SSH into the private subnets.
 
 <p align="center">
 <img src="https://i.imgur.com/CD7l7TO.png" height="80%" width="80%" alt="Step 15-2"/>
 </p>
 
-- SSH into the bastion host to get started. Copy the bastion host's public IPv4 address and open PuTTY. For the host name, enter ec2-user@(IPv4 address). Expand the SSH and select Auth. Check Allow agent forwarding and click Open to access the bastion host. You will know if you have accessed the bastion host if the IP address on PuTTY matches the Private IPv4 address of the bastion host on the AWS console.
+- SSH into the bastion host to get started. Copy the bastion host's <b>Public IPv4 address</b> and open PuTTY. For the <b>host name</b>, enter ec2-user@(IPv4 address). Expand the <b>SSH</b> tab and select <b>Auth</b>. Check <b>Allow agent forwarding</b> and click <b>Open</b> to access the bastion host. You will know if you have accessed the bastion host if the IP address on PuTTY matches the <b>Private IPv4 address</b> of the bastion host on the AWS console.
 
 <p align="center">
 <img src="https://i.imgur.com/s6X4Mjv.png" height="80%" width="80%" alt="Step 15-3"/>
@@ -650,7 +650,7 @@ _<b>NOTE:</b> This project can use any domain that you own, even ones that are r
 <img src="https://i.imgur.com/BODeBt4.png" height="80%" width="80%" alt="Step 15-5"/>
 </p>
 
-- It is now possible to SSH into a Private App Subnet. On the AWS console, select Webserver AZ1 and copy its Private IPv4 address. On PuTTY, enter the following command:
+- It is now possible to SSH into a Private App Subnet. On the AWS console, select <b>Webserver AZ1</b> and copy its <b>Private IPv4 address</b>. On PuTTY, enter the following command:
   - ssh ec2-user@(Private IP address)
 
 <p align="center">
@@ -659,17 +659,17 @@ _<b>NOTE:</b> This project can use any domain that you own, even ones that are r
 
 <h3>&#9327; Create an HTTPS Listener</h3>
 
-- The application load balancer will need an HTTPS listener now that the SSL certificate has been issued. It is needed in order to secure the website. Navigate to the Load Balancers tab in the EC2 service. Select Dev-ALB and scroll to the Listeners and rules section.
+- The application load balancer will need an HTTPS listener now that the SSL certificate has been issued. It is needed in order to secure the website. Navigate to the <b>Load Balancers</b> tab in the <b>EC2</b> service. Select <b>Dev-ALB</b> and scroll to the <b>Listeners and rules</b> section.
 
 <p align="center">
 <img src="https://i.imgur.com/tTRVKCu.png" height="80%" width="80%" alt="Step 16-1"/>
 </p>
 
-- Click Add listener and use the following configurations:
-  - Protocol: HTTPS
-  - Action types: Forward to target groups
-  - Target group: Dev-TG
-  - Default SSL/TLS certificate: The certificate that you created earlier
+- Click <b>Add listener</b> and use the following configurations:
+  - <b>Protocol</b>: HTTPS
+  - <b>Action types</b>: Forward to target groups
+  - <b>Target group</b>: Dev-TG
+  - <b>Default SSL/TLS certificate</b>: The certificate that you created earlier
  
 <p align="center">
 <img src="https://i.imgur.com/DVnn84n.png" height="80%" width="80%" alt="Step 16-2"/>
@@ -679,20 +679,20 @@ _<b>NOTE:</b> This project can use any domain that you own, even ones that are r
 <img src="https://i.imgur.com/OWraWri.png" height="80%" width="80%" alt="Step 16-3"/>
 </p>
 
-- The HTTPS listener will be edited after it has been created. This will allow HTTP traffic to be redirected to HTTPS. Select the HTTP listener and click Edit listener.
+- The HTTPS listener will be edited after it has been created. This will allow HTTP traffic to be redirected to HTTPS. Select the <b>HTTP listener</b> and click <b>Edit listener</b>.
 
 <p align="center">
 <img src="https://i.imgur.com/BiRNsbl.png" height="80%" width="80%" alt="Step 16-4"/>
 </p>
 
-- Under Default actions, select Redirect to URL. The Protocol should be HTTPS. Save the changes.
+- Under <b>Default actions</b>, select <b>Redirect to URL</b>. The <b>Protocol</b> should be <b>HTTPS</b>. Save the changes.
 
 <p align="center">
 <img src="https://i.imgur.com/JYviuw6.png" height="80%" width="80%" alt="Step 16-5"/>
 </p>
 
-- The next step is to SSH into one of the Private App Subnets. Webserver AZ1 will accessed via the bastion host.
-  - Escalate to root privileges with the command sudo su. Now that you are the root user, enter this command:
+- The next step is to SSH into one of the Private App Subnets. <b>Webserver AZ1</b> will accessed via the bastion host.
+  - Escalate to root privileges with the command <b>sudo su</b>. Now that you are the root user, enter this command:
   - nano /var/www/html/wp-config.php
 
 <p align="center">
@@ -709,7 +709,7 @@ _<b>NOTE:</b> This project can use any domain that you own, even ones that are r
 <img src="https://i.imgur.com/biow1us.png" height="80%" width="80%" alt="Step 16-8"/>
 </p>
 
-- Now that the configuration file has been modified, access the website in a new tab. Enter the domain name with HTTPS in the URL. When the website is accessed, the connection is now secure. Because the URL has changed again, update the WordPress settings as an admin to reflect the change.
+- Now that the configuration file has been modified, access the website in a new tab. Enter the domain name with <b>HTTPS</b> in the URL. When the website is accessed, the connection is now secure. Because the URL has changed again, update the WordPress settings as an admin to reflect the change.
 
 <p align="center">
 <img src="https://i.imgur.com/shuvAaU.png" height="80%" width="80%" alt="Step 16-9"/>
