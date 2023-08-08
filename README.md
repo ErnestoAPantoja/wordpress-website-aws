@@ -263,13 +263,13 @@ _<b>NOTE:</b> When you create a route to a route table, all the subnets associat
 <h3>&#9316; Create the Elastic File System (EFS)</h3>
 
 - Now that the RDS database is in place, it is time to create an EFS file system with mount targets in the Private Data Subnets in both Availability Zones. This is to ensure the web servers can have access to shared files.
-- On the AWS management console, navigate to the EFS service and click Create file system and Customize. Use the following parameters to create the file system:
-  - Name: Dev-EFS
-  - Encryption: Check off Enable encryption of data at rest (This is to ensure we do not get charged for the encryption.)
-  - Tag key: Name, Tag value: Dev-EFS
-  - VPC: Dev VPC
-  - Mount targets: us-east-1a, Private Data Subnet AZ1, EFS Security Group and us-east-1b, Private Data Subnet AZ2, EFS Security Group
-  - File system policy: Leave everything as default
+- On the AWS management console, navigate to the <b>EFS</b> service and click <b>Create file system</b> and <b>Customize</b>. Use the following parameters to create the file system:
+  - <b>Name</b>: Dev-EFS
+  - <b>Encryption</b>: Check off Enable encryption of data at rest (This is to ensure we do not get charged for the encryption.)
+  - <b>Tag key</b>: Name, Tag value: Dev-EFS
+  - <b>VPC</b>: Dev VPC
+  - <b>Mount targets</b>: us-east-1a, Private Data Subnet AZ1, EFS Security Group and us-east-1b, Private Data Subnet AZ2, EFS Security Group
+  - <b>File system policy</b>: Leave everything as default
 
 <p align="center">
 <img src="https://i.imgur.com/8gXgWA4.png" height="80%" width="80%" alt="Step 5-1"/>
@@ -279,7 +279,7 @@ _<b>NOTE:</b> When you create a route to a route table, all the subnets associat
 <img src="https://i.imgur.com/T6798l6.png" height="80%" width="80%" alt="Step 5-2"/>
 </p>
 
-- Now that the elastic file system is created, click on the File system ID and click on Attach. This information will be used later in the project to mount the file system.
+- Now that the elastic file system is created, click on the File system ID and click on <b>Attach</b>. _This information will be used later in the project to mount the file system._
 
 <p align="center">
 <img src="https://i.imgur.com/9XEGzAk.png" height="80%" width="80%" alt="Step 5-3"/>
@@ -291,8 +291,8 @@ _<b>NOTE:</b> When you create a route to a route table, all the subnets associat
 
 <h3>&#9317; Create a Key Pair</h3>
 
-- A key pair will now have to be created in order to progress further with the project. On the AWS management console, navigate to the EC2 service. On the left-hand menu, click on Key Pairs and click Create key pair.
-  - Name the key pair (in my case, myec2key) and make sure the Key pair type is RSA. The file format will be kept as .ppk because I will be using the key pair for use with PuTTY.
+- A key pair will now have to be created in order to progress further with the project. On the AWS management console, navigate to the <b>EC2</b> service. On the left-hand menu, click on <b>Key Pairs</b> and click <b>Create key pair</b>.
+  - Name the key pair <b>(myec2key)</b> and make sure the Key pair type is <b>RSA</b>. The file format will be kept as .ppk because I will be using the key pair for use with PuTTY.
 
 <p align="center">
 <img src="https://i.imgur.com/NHsrLTe.png" height="80%" width="80%" alt="Step 6-1"/>
@@ -306,15 +306,15 @@ _<b>NOTE:</b> When you create a route to a route table, all the subnets associat
 
 <h3>&#9318; Launching a Setup Server</h3>
 
-- An EC2 instance will be launched in Public Subnet AZ1 in order to install the website and move files to the EFS. On the AWS management console, navigate to the EC2 service and select Instances (running). Click on Launch instances to get started. Use the following parameters for the instance:
-  - Name: Setup Server
-  - Application and OS Images: Amazon Linux
-  - AMI: Amazon Linux 2 AMI (Free tier eligible)
-  - Instance type: t2.micro
-  - Key pair (login): myec2key (the key pair that you created)
-  - VPC: Dev VPC
-  - Subnet: Public Subnet AZ1
-  - Firewall (security groups): SSH Security Group, ALB Security Group, Webserver Security Group
+- An EC2 instance will be launched in Public Subnet AZ1 in order to install the website and move files to the EFS. On the AWS management console, navigate to the <b>EC2</b> service and select <b>Instances (running)</b>. Click on <b>Launch instances</b> to get started. Use the following parameters for the instance:
+  - <b>Name</b>: Setup Server
+  - <b>Application and OS Images</b>: Amazon Linux
+  - <b>AMI</b>: Amazon Linux 2 AMI (Free tier eligible)
+  - <b>Instance type</b>: t2.micro
+  - <b>Key pair (login)</b>: myec2key
+  - <b>VPC</b>: Dev VPC
+  - <b>Subnet</b>: Public Subnet AZ1
+  - <b>Firewall (security groups)</b>: SSH Security Group, ALB Security Group, Webserver Security Group
 
 <p align="center">
 <img src="https://i.imgur.com/0ZSMbeb.png" height="80%" width="80%" alt="Step 7-1"/>
@@ -330,8 +330,8 @@ _<b>NOTE:</b> When you create a route to a route table, all the subnets associat
 
 <h3>&#9319; Accessing the Public Subnet EC2 Instance</h3>
 
-- Because I am using a Windows computer, I will be using PuTTY to SSH into the instance that was created. While it is possible to not use PuTTY since I am using a Windows 10 computer, I will still use PuTTY for practice.
-- To SSH into the instance, copy the instance's Public IPv4 address. Within the Session tab of PuTTY, enter the Host Name ec2-user@(Public IPv4 address). In the Connection tab, expand SSH and expand Auth. Select Credentials under the Auth tab. Enter the private key that was downloaded to the computer when the key pair was created earlier in the project. After you click Open, you will successfully access the EC2 instance.
+- Because I am using a Windows computer, I will be using PuTTY to SSH into the instance that was created. While it is possible to not use PuTTY because I am using a Windows 10 computer, I will still use PuTTY for practice.
+- To SSH into the instance, copy the instance's <b>Public IPv4 address</b>. Within the <b>Session</b> tab of PuTTY, enter the <b>Host Name</b> ec2-user@(Public IPv4 address). In the <b>Connection</b> tab, expand <b>SSH</b> and expand <b>Auth</b>. Select <b>Credentials</b> under the <b>Auth</b> tab. Enter the private key that was downloaded to the computer when the key pair was created earlier in the project. After you click <b>Open</b>, you will successfully access the EC2 instance.
 
 <p align="center">
 <img src="https://i.imgur.com/P3r8ZZR.png" height="80%" width="80%" alt="Step 8-1"/>
