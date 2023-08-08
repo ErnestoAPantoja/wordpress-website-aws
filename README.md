@@ -725,22 +725,22 @@ _<b>NOTE:</b> This project can use any domain that you own, even ones that are r
 
 <h3>&#9328; Create an Auto Scaling Group</h3>
 
-- An auto scaling group will be made to dynamically create and scale web servers in the Private App Subnets. This is to make the website highly available, scalable, fault-tolerant, and elastic. Before making the auto scaling group, terminate Webserver AZ1 and AZ2 from the EC2 console.
+- An auto scaling group will be made to dynamically create and scale web servers in the Private App Subnets. This is to make the website highly available, scalable, fault-tolerant, and elastic. Before making the auto scaling group, <b>terminate Webserver AZ1 and AZ2</b> from the <b>EC2</b> console.
 
 <p align="center">
 <img src="https://i.imgur.com/FoXfHP1.png" height="80%" width="80%" alt="Step 17-1"/>
 </p>
 
-- A launch template will be made to contain the configurations of the EC2 instances that are created in the auto scaling gorup. Select Launch Templates from the land-hand menu and click Create launch template. Use the following configurations to create the launch template:
-  - Launch template name: Dev-Launch-Template
-  - Description: Launch Template for ASG
-  - Enable Auto Scaling guidance
-  - Application and OS Images: Amazon Linux
-  - Amazon Machine Image: Amazon Linux 2 AMI (free tier eligible)
-  - Instance type: t2.micro
-  - Key pair: myec2key
-  - Firewall (security groups): Web Server Security Group
-- Before creating the launch template, insert the same script used to create the EC2 instance for the application load balancer (and make sure the EFS data is correct).
+- A launch template will be made to contain the configurations of the EC2 instances that are created in the auto scaling gorup. Select <b>Launch Templates</b> from the land-hand menu and click <b>Create launch template</b>. Use the following configurations to create the launch template:
+  - <b>Launch template name</b>: Dev-Launch-Template
+  - <b>Description</b>: Launch Template for ASG
+  - <b>Enable Auto Scaling guidance</b>
+  - <b>Application and OS Images</b>: Amazon Linux
+  - <b>Amazon Machine Image</b>: Amazon Linux 2 AMI (free tier eligible)
+  - <b>Instance type</b>: t2.micro
+  - <b>Key pair</b>: myec2key
+  - <b>Firewall (security groups)</b>: Web Server Security Group
+- Before creating the launch template, insert the same script used to create the EC2 instance for the application load balancer (and make sure the EFS data is correct) into the user data.
 
 <p align="center">
 <img src="https://i.imgur.com/jDeOgMq.png" height="80%" width="80%" alt="Step 17-2"/>
@@ -750,19 +750,19 @@ _<b>NOTE:</b> This project can use any domain that you own, even ones that are r
 <img src="https://i.imgur.com/7Ba46zW.png" height="80%" width="80%" alt="Step 17-3"/>
 </p>
 
-- Now that the launch template is made, the auto scaling group can now be created. Select Auto Scaling Groups on the left-hand menu and click Create Auto Scaling group. Use the following configurations to create the Auto Scaling group:
-  - Auto Scaling gorup name: Dev-ASG
-  - Launch template (NOT Launch configuration): Dev-Launch-Template
-  - VPC: Dev VPC
-  - Availabilty Zones and subnets: Private App Subnet AZ1 and Private App Subnet AZ2
-  - Load balancing: Attach to an existing load balancer
-  - Attach to an existing load balancer: Choose from your load balancer target groups
-  - Existing load balancer target groups: Dev-TG | HTTP
-  - Additional health check types: Turn on Elastic Load Balancing health checks
-  - Monitoring: Enable group metrics collection within CloudWatch
-  - Group size: Desired capacity - 2, Minimum capacity - 1, Maximum capacity - 4
-  - Add notifications: Create a topic named Default_CloudWatch_Alarms_Topic with your email as the recipient
-  - Tags: Key - Name, Value - ASG-Webserver
+- Now that the launch template is made, the auto scaling group can now be created. Select <b>Auto Scaling Groups</b> on the left-hand menu and click <b>Create Auto Scaling group</b>. Use the following configurations to create the Auto Scaling group:
+  - <b>Auto Scaling gorup name</b>: Dev-ASG
+  - <b>Launch template</b> (_<b>NOT</b>_ Launch configuration): Dev-Launch-Template
+  - <b>VPC</b>: Dev VPC
+  - <b>Availabilty Zones and subnets</b>: Private App Subnet AZ1 and Private App Subnet AZ2
+  - <b>Load balancing</b>: Attach to an existing load balancer
+  - <b>Attach to an existing load balancer</b>: Choose from your load balancer target groups
+  - <b>Existing load balancer target groups</b>: Dev-TG | HTTP
+  - <b>Additional health check types</b>: Turn on Elastic Load Balancing health checks
+  - <b>Monitoring</b>: Enable group metrics collection within CloudWatch
+  - <b>Group size</b>: Desired capacity - 2, Minimum capacity - 1, Maximum capacity - 4
+  - <b>Add notifications</b>: Create a topic named Default_CloudWatch_Alarms_Topic with your email as the recipient
+  - <b>Tags</b>: Key - Name, Value - ASG-Webserver
 - After creating the Auto Scaling group, the group will now make two new instances based on the launch template.
 
 <p align="center">
@@ -773,13 +773,13 @@ _<b>NOTE:</b> This project can use any domain that you own, even ones that are r
 <img src="https://i.imgur.com/DcUxO0T.png" height="80%" width="80%" alt="Step 17-5"/>
 </p>
 
-- The website will take a few minutes to become online once again because the instances need to be created. Their status can be checked in the Target Groups tab. The Health status will show whether or not an instance is healthy. If the health status is unhealthy, wait a few minutes to allow all the user data script to run and install the software. Refreshing the page will update the status to healthy after time has passed.
+- The website will take a few minutes to become online once again because the instances need to be created. Their status can be checked in the <b>Target Groups</b> tab. The <b>Health status</b> will show whether or not an instance is healthy. If the health status is unhealthy, wait a few minutes to allow all the user data script to run and install the software. Refreshing the page will update the status to healthy after time has passed.
 
 <p align="center">
 <img src="https://i.imgur.com/VJxwuUQ.png" height="80%" width="80%" alt="Step 17-6"/>
 </p>
 
-- All that is left is to log in to the website as an admin and customize the website. The Appearance tab on WordPress will allow different themes and other customization items to be used to make the website more presentable.
+- All that is left is to log in to the website as an admin and customize the website. The <b>Appearance</b> tab on WordPress will allow different themes and other customization items to be used to make the website more presentable.
 
 <p align="center">
 <img src="https://i.imgur.com/zisDtwJ.png" height="80%" width="80%" alt="Step 17-7"/>
