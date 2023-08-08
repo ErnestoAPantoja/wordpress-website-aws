@@ -4,7 +4,7 @@ I have created a dynamic website using AWS services. The purpose behind this pro
 
 _<b>NOTE:</b> This project is done exclusively in the N. Virginia region (us-east-1) in order to ensure all services are available. Not all services are available in multiple regions. If you want to replicate this project, research the services that are used and see if they are all available in a specific region._
 
-<h2>Environments and Technologies Used</h2>
+<h2>Services and Technologies Used</h2>
 
 - AWS
 - PuTTY
@@ -47,10 +47,10 @@ _<b>NOTE:</b> This project is done exclusively in the N. Virginia region (us-eas
 <img src="https://i.imgur.com/Tqq0xAr.jpg" height="80%" width="80%" alt="VPC Reference"/>
 </p>
 
-- A three-tier VPC will serve as the architecture for the project. The first tier will have the public subnets. The public subnets will host resources such as NAT Gateways, Application Load Balancers, and eventually a bastion host. The second tier will host a private subnet. The web servers (EC2 instances ) will be hosted there. The third tier will have another private subnet which will host the database necessary to complete the project. The subnets will be duplicated across multiple availability zones to increase fault tolerance and high availability. An Internet Gateway and route table will also be created to allow resources in the VPC to access the internet.
+- A three-tier VPC will serve as the architecture for the project. The first tier will have the public subnets. The public subnets will host resources such as NAT gateways, an application load balancer, and eventually a bastion host. The second tier will host a private subnet. The web servers (EC2 instances) will be hosted there. The third tier will have another private subnet which will host the database necessary to complete the project. The subnets will be duplicated across multiple availability zones to increase fault tolerance and high availability. An internet gateway and route table will also be created to allow resources in the VPC to access the internet.
 
-- The VPC will be created in the N. Virginia region. From the AWS Management console, navigate to the VPC service. In the VPCs menu, click Create VPC.
-  - Give a name to the VPC (in my case, it is Dev VPC) and enter the IPv4 CIDR block (10.0.0.0/16). Leave the rest of the settings as default and click Create VPC.
+- The VPC will be created in the N. Virginia region. From the AWS Management console, navigate to the _VPC_ service. In the VPCs menu, click <b>Create VPC</b>.
+  - Give a name to the VPC (in my case, it is Dev VPC) and enter the IPv4 CIDR block (10.0.0.0/16). Leave the rest of the settings as default and click <b>Create VPC</b>.
 
 <p align="center">
 <img src="https://i.imgur.com/4bpt43d.png" height="80%" width="80%" alt="Step 1-1"/>
